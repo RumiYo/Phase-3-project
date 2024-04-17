@@ -2,25 +2,26 @@
 
 from helpers import (
     exit_program,
-    helper_1
+    login,
+    signup
 )
 
 
 def main():
     while True:
-        menu()
+        menu1()
         choice = input("> ")
         if choice == "0":
             exit_program()
         elif choice == "1":
-            helper_1()
+            login()
         elif choice == "2":
-            pass
+            signup()
         else:
             print("Invalid choice")
 
 
-def menu():
+def menu1():
     print("Welcome to Music player!")
     print("Please select an option:")
     print("0. Exit the program")
