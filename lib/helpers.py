@@ -36,4 +36,16 @@ def signup():
     except Exception as exc:
         print("Error creating a user account", exc)
 
+def list_artists():
+    print("Artist list")
+
+def find_artist_by_name():
+    print("Find artist")
+
+def add_artists():
+    print("Add artist")
+
+
+
+
 
