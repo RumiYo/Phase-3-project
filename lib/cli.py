@@ -14,9 +14,11 @@ def main():
         if choice == "0":
             exit_program()
         elif choice == "1":
-            login()
+            if login():
+                menu2()
         elif choice == "2":
-            signup()
+            if signup():
+                menu2()
         else:
             print("Invalid choice")
 
@@ -27,6 +29,13 @@ def menu1():
     print("0. Exit the program")
     print("1. Login")
     print("2. Create your account")
+
+def menu2():
+    print("What do you want to listen to?")
+    print("Select Playlists")
+    print("Select Artists")
+    print("Select Songs")
+    input("Press Enter to return to the main menu")
 
 
 if __name__ == "__main__":
