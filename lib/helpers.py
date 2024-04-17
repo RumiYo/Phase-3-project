@@ -42,9 +42,18 @@ def list_artists():
 def find_artist_by_name():
     print("Find artist")
 
-def add_artists():
+def add_artist():
     print("Add artist")
 
+
+def list_songs():
+    print("Song list")
+
+def find_song_by_name():
+    print("Find song")
+
+def add_song():
+    print("Add song")
 
 
 
