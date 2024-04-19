@@ -12,8 +12,9 @@ class Song:
         self.artist_id = artist_id
 
     def __repr__(self):
+        artist = Artist.find_by_id(self.artist_id)
         return (
-            f"<Song {self.name} (Year: {self.year}, Artist: {self.artist_id})"
+            f"<Song {self.id}: {self.name} (Artist: {artist.name}, Year: {self.year})>"
         )
     
     @property

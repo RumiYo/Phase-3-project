@@ -64,7 +64,10 @@ def add_artist():
         print("Error creating an artist", exc)
 
 def list_songs():
-    print("Song list")
+    print("Song list\n")
+    songs = Song.get_all()
+    for song in songs:
+        print(song)
 
 def find_song_by_name():
     print("Find song")
@@ -76,7 +79,6 @@ def add_song():
     year = input("Enter the release year: ")
     artist_name = input("Enter the artist name: ")
     artist = Artist.find_by_name(artist_name)
-    print(name, year, artist_name, artist.id)
     try:
         song = Song.create(name, int(year), int(artist.id))
         print(f"{song.name} is successfly added to the song list")
