@@ -8,7 +8,7 @@ def exit_program():
     exit()
 
 def login():
-    print("Performing useful function#1.")
+    print("\nGood to see you again!\n")
     name = input("Enter your name: ")
     password = input("Enter your password: ")
     user = User.find_by_name(name)
@@ -22,10 +22,10 @@ def login():
 
 def signup():
     User.create_table()
-    print("Performing useful function#2.")
+    print("\nCrate your account.\n")
     name = input("Enter your name: ")
     birth_year = input("Enter your birth year: ")
-    print(f"Gener list: {User.GENDERS}")
+    print(f"Gender list: {User.GENDERS}")
     gender = input("Enter your gender (Select a number from above): ")
     email = input("Enter your email address: ")
     password = input("Create password (minimum 8 charactors): ")
@@ -37,14 +37,26 @@ def signup():
         print("Error creating a user account", exc)
 
 def list_artists():
-    print("Artist list")
+    print("Artist list\n")
+    artists = Artist.get_all()
+    for artist in artists:
+        print(artist)
 
 def find_artist_by_name():
-    print("Find artist")
+    print("Find artist\n")
 
 def add_artist():
-    print("Add artist")
-
+    print("Add artist\n")
+    Artist.create_table()
+    name = input("Enter artist name: ")
+    country = input("Enter what country the artist is from: ")
+    print(f"Genre list: {GENRES}")
+    genre_id =input ("Enter genre number from the list above: ")
+    try:
+        artist = Artist.create(name, country, int(genre_id))
+        print(f"{artist.name} is successfly added to the artist list")
+    except Exception as exc:
+        print("Error creating an artist", exc)
 
 def list_songs():
     print("Song list")

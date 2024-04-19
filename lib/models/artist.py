@@ -24,7 +24,7 @@ class Artist:
         self.genre_id = genre_id
 
     def __repr__(self):
-        return f"<Artist {self.name}: id: {self.id}, country: {self.country}, genre: {self.genre}"
+        return f"<Artist{self.id} {self.name} (country: {self.country}, genre: {GENRES.get(self.genre_id)})>"
 
     @property 
     def name(self):
@@ -44,7 +44,7 @@ class Artist:
     @country.setter
     def country(self, country):
         if isinstance(country, str) and len(country):
-            self._contry = country
+            self._country = country
         else:
             raise ValueError("Country is a string")
     
@@ -54,7 +54,7 @@ class Artist:
 
     @genre_id.setter
     def genre_id(self, genre_id):
-        if isinstance(genre_id, int) and len(genre_id):
+        if isinstance(genre_id, int) and 1 <= genre_id <= 10:
             self._genre_id = genre_id
         else:
             raise ValueError("Genre is a number")
@@ -66,7 +66,7 @@ class Artist:
                 id INTEGER PRIMARY KEY,
                 name TEXT,
                 country TEXT,
-                genre_id TEXT
+                genre_id INTEGER
             )
         """
         CURSOR.execute(sql)
@@ -83,7 +83,7 @@ class Artist:
     def save(self):
         sql = """
             INSERT INTO artists (name, country, genre_id)
-            VALUES (?, ?)
+            VALUES (?, ?, ?)
         """
         CURSOR.execute(sql, (self.name, self.country, self.genre_id))
         CONN.commit()
@@ -103,7 +103,7 @@ class Artist:
             SET name = ?, country = ?, genre_id = ? 
             WHERE id = ?
         """
-        COURSOR.execute(sql, (self.name, self.country, self.genre_id))
+        COURSOR.execute(sql, (self.name, self.country, self.genre_id, self.id))
         CON.commit()
     
     def delete(self):
@@ -125,10 +125,10 @@ class Artist:
             artist.country = row[2]
             artist.genre_id = row[3]
         else:
-            artist = cls(row[1], row[2],row[3])
+            artist = cls(row[1], row[2], row[3])
             artist.id = row[0]
             cls.all[artist.id] = artist
-            return artst
+        return artist
 
     @classmethod
     def get_all(cls):
@@ -144,7 +144,7 @@ class Artist:
             SELECT * FROM artists
             WHERE id = ?
         """
-        row = CURSOR.execute(sql,(self.id,)).fetchone()
+        row = CURSOR.execute(sql,(id,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
     def songs(self):

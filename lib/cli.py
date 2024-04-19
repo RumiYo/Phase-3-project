@@ -81,37 +81,40 @@ def main():
         elif choice == "2":  # 2. Sign in
             if signup():
                 logged_in = True 
-                menu2()
+                main_page()
         else:
             print("Invalid choice")
 
 
 def login_page():
-    print("Welcome to Music player!")
+    print("\nWelcome to Music player!\n")
     print("Please select an option:")
     print("0. Exit the program")
     print("1. Login")
     print("2. Create your account")
+    print("\n")
 
 def main_page():
-    print("What do you want to listen to?")
+    print("\nWhat do you want to listen to?\n")
     print("1. Artists")
     print("2. Songs")
     print("3. Playlists")
     print("00. Sign Out")
     print("0. Exit the program")
+    print("\n")
 
 def menu_artists():
-    print("Artists")
+    print("\nArtists\n")
     print("1. Open the list of artists")
     print("2. Find artist by name")
     print("3. Add artist")
     print("4. Return to Main page")
     print("0. Exit the program")
+    print("\n")
     return True
 
 def menu_songs():
-    print("Songs")
+    print("\nSongs\n")
     print("1. Open the list of songs")
     print("2. Find song by name")
     print("3. Add song")
