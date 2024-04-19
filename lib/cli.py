@@ -9,8 +9,10 @@ from helpers import (
     add_artist,
     list_songs,
     find_song_by_name,
-    add_song
-
+    add_song,
+    list_playlists,
+    open_playlist,
+    create_playlist
 )
 
 
@@ -71,7 +73,26 @@ def main():
                                     print("Invalid choice") 
 
                     elif choice == "3":  # 3. Playlists
-                        pass
+                        
+                        
+                        while True: 
+                            if menu_playllists():
+                                choice = input("> ")
+                                if choice == "1":   # 1. Open the list of playlists
+                                    list_playlists()
+                                elif choice == "2":  # 2. Open a playlist
+                                    open_playlist()
+                                elif choice == "3":  # 3. Create playlist
+                                    create_playlist()
+                                elif choice == "4":  # 4. Return to Main page
+                                    break
+                                elif choice == "0":  # 0. Exit the program
+                                    exit_program()
+                                    break
+                                else: 
+                                    print("Invalid choice") 
+
+
                     elif choice == "00":  # 00. Sign Out0
                         logged_in = False
                         break 
@@ -123,7 +144,15 @@ def menu_songs():
     print("\n")
     return True
 
-    
+def menu_playllists():
+    print("\nPlaylist\n")
+    print("1. Open the list of playlist")
+    print("2. Open playlist by name")
+    print("3. Create playlist")
+    print("4. Return to Main page")
+    print("0. Exit the program")
+    print("\n")
+    return True    
 
 if __name__ == "__main__":
     main()

@@ -70,7 +70,10 @@ def list_songs():
         print(song)
 
 def find_song_by_name():
-    print("Find song")
+    print("Find song\n")
+    name = input("Enter the song name: ")
+    song = Song.find_by_name(name)
+    print(song) if song else print (f'{name} not found')
 
 def add_song():
     print("Add song\n")
@@ -85,6 +88,14 @@ def add_song():
     except Exception as exc:
         print("Error creating a song", exc)
 
+def list_playlists():
+    print("Playlist list\n")    
+    
+def open_playlist():
+    print("Open Playlist\n")
+
+def create_playlist():
+    print("Create Playlist\n")
 
 
 
