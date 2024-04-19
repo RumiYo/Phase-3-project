@@ -120,6 +120,7 @@ def menu_songs():
     print("3. Add song")
     print("4. Return to Main page")
     print("0. Exit the program")
+    print("\n")
     return True
 
     

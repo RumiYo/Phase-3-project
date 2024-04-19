@@ -1,5 +1,6 @@
 # lib/helpers.py
 from models.artist import Artist, GENRES
+from models.song import Song
 from models.user import User
 
 
@@ -69,7 +70,20 @@ def find_song_by_name():
     print("Find song")
 
 def add_song():
-    print("Add song")
+    print("Add song\n")
+    Song.create_table()
+    name = input("Enter song name: ")
+    year = input("Enter the release year: ")
+    artist_name = input("Enter the artist name: ")
+    artist = Artist.find_by_name(artist_name)
+    print(name, year, artist_name, artist.id)
+    try:
+        song = Song.create(name, int(year), int(artist.id))
+        print(f"{song.name} is successfly added to the song list")
+    except Exception as exc:
+        print("Error creating a song", exc)
+
+
 
 
 

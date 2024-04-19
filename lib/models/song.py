@@ -1,4 +1,5 @@
 from models.__init__ import CURSOR, CONN
+from models.artist import Artist
 
 class Song:
 
@@ -51,14 +52,15 @@ class Song:
     @classmethod
     def create_table(cls):
         sql = """
-            CREATE TABLE IF NOT EXIST songs (
+            CREATE TABLE IF NOT EXISTS songs (
                 id INTEGER PRIMARY KEY,
                 name TEXT,
                 year INTEGER, 
-                FOREIGN KEY (artist_id) REFERENCES artist(id)
+                artist_id INTEGER,
+                FOREIGN KEY (artist_id) REFERENCES artists(id)
             )
         """
-        CURSOR.execute()
+        CURSOR.execute(sql)
         CONN.commit()
     
     @classmethod
@@ -66,7 +68,7 @@ class Song:
         sql = """
             DROP TABLE IF EXISTS songs;
         """
-        CURSOR.execute()
+        CURSOR.execute(sql)
         CONN.commit()
 
     def save(self):
@@ -74,7 +76,7 @@ class Song:
             INSERT INTO songs (name, year, artist_id)
             VALUES (?, ?, ?)
         """
-        CURSOR.execute()
+        CURSOR.execute(sql, (self.name, self.year, self.artist_id))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -124,7 +126,7 @@ class Song:
         sql = """
             SELECT * FROM songs
         """ 
-        row =CURSOR.execute(sql).fetchall()
+        rows =CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
     @classmethod
@@ -140,7 +142,7 @@ class Song:
     def find_by_name(cls,name):
         sql = """
             SELECT * FROM songs 
-            WHERE name = ?
+            WHERE LOWER(name) = LOWER(?)
         """
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
