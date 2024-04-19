@@ -44,6 +44,10 @@ def list_artists():
 
 def find_artist_by_name():
     print("Find artist\n")
+    name = input("Enter the artist name: ")
+    artist = Artist.find_by_name(name)
+    print(artist) if artist else print (f'{name} not found')
+
 
 def add_artist():
     print("Add artist\n")
