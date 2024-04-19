@@ -4,15 +4,14 @@ class Playlist:
 
     all = {}
 
-    def __init__(self, name, song_id, user_id):
+    def __init__(self, name, user_id):
         self.id = id
         self.name = name
-        self.song_id = song_id
         self.user_id = user_id
 
     def __repr__(self):
         return(
-            f"<Playlist {self.name} (song_id: {self.song_id}, user_id: {self.user_id}>"
+            f"<Playlist {self.name} ( user_id: {self.user_id}) >>"
         )
 
     @property
@@ -25,17 +24,6 @@ class Playlist:
             self._name = name
         else:
             raise TypeError("Playlist name must be a non-empty string")
-
-    @property
-    def song_id (self):
-        return self._song_id
-
-    @song_id.setter
-    def song_id(self, song_id):
-        if isinstance(song_id, int) and 0 < song_id:
-            self._song_id = song.id
-        else:
-            raise TypeError("Song ID must be a string")
 
     @property
     def user_id (self):
@@ -54,7 +42,7 @@ class Playlist:
             CREATE TABLE IF NOT EXIST playlists (
                 id INTEGER PRIMARY KEY,
                 name TEXT, 
-                FOREIGN KEY (song_id) REFERENCES songs(id), 
+                user_id INTEGER,
                 FOREIGN KEY (user_id) EREFERENCES users(id)
             )
         """
@@ -71,9 +59,9 @@ class Playlist:
     
     def save(self):
         sql = """
-            INSERT INTO playlists (name, song_id, user_id)
+            INSERT INTO playlists (name, user_id)
         """
-        CURSOR.execute(sql, (self.name, self.song_id, self.user_id))
+        CURSOR.execute(sql, (self.name, self.user_id))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -82,10 +70,10 @@ class Playlist:
     def update(self):
         sql = """ 
             UPDATE playlists
-            SET name = ? song_id = ?, user_id = ?
+            SET name = ?, user_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.song_id, self.user_id, self.id))
+        CURSOR.execute(sql, (self.name, self.user_id, self.id))
         CONN.commit()
 
     def delete(self):
@@ -99,8 +87,8 @@ class Playlist:
         self.id = None
 
     @classmethod
-    def create(cls, name, song_id, user_id):
-        playlist = cls(name, song_id, user_id)
+    def create(cls, name, user_id):
+        playlist = cls(name, user_id)
         playlist.save()
         return playlist
 
@@ -109,10 +97,9 @@ class Playlist:
         playlist = cls.all.get(row[0])
         if playlist: 
             playlist.name = row[1]
-            playlist.song_id = row[2]
-            playlist.user_id = row[3]
+            playlist.user_id = row[2]
         else: 
-            playlist = cls(row[1], row[2], row[3])
+            playlist = cls(row[1], row[2])
             playlist.id = row[0]
             cls.all[playlist.id] = playlist
         return playlist
