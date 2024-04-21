@@ -138,7 +138,7 @@ def menu_artists():
 
 def menu_songs():
     print("\nSongs\n")
-    print("1. Open the list of songs")
+    print("1. Open the whole list of songs")
     print("2. Find song by name")
     print("3. Add song")
     print("4. Return to Main page")
