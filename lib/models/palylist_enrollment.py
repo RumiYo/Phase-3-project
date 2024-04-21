@@ -4,14 +4,13 @@ class Playlist_enrollment:
 
     all = {}
 
-    def __init(self, playlist_id, song_id, id=None):
+    def __init__(self, playlist_id, song_id, id=None):
         self.id = id
         self.playlist_id = playlist_id
         self.song_id = song_id
     
-    def __repr(self):
+    def __repr__(self):
         return (f"<Playlist {self.playlist_id}: {self.song_id}>")
-
 
     @property
     def playlist_id(self):
@@ -19,7 +18,7 @@ class Playlist_enrollment:
     
     @playlist_id.setter
     def playlist_id(self, playlist_id):
-        if isinstance(playlist_id, int) and len(playlist_id):
+        if isinstance(playlist_id, int) and playlist_id:
             self._playlist_id = playlist_id
 
     @property
@@ -28,7 +27,7 @@ class Playlist_enrollment:
     
     @song_id.setter
     def song_id(self, song_id):
-        if isinstance(song_id, int) and len(song_id):
+        if isinstance(song_id, int) and song_id:
             self._song_id = song_id
 
     @classmethod
@@ -82,6 +81,12 @@ class Playlist_enrollment:
         CONN.commit()
         del type(self).all[self.id]
         self.id = None
+
+    @classmethod
+    def create(cls, playlist_id, song_id):
+        enrollment = cls(playlist_id, song_id)
+        enrollment.save()
+        return enrollment
     
     @classmethod
     def instance_from_db(cls, row):
@@ -120,4 +125,3 @@ class Playlist_enrollment:
         """
         row = CURSOR.execute(sql, (name, )).fetchone()
         return cls.instance_from_db(row) if row else None
-        

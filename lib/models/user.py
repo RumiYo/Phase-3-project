@@ -24,6 +24,13 @@ class User:
             f"<User {self.name} (Gender: {self.gender}, Birth year: {self.birth_year}, Email address: {self.email})"
         )
 
+    @classmethod
+    def exists_in_all(cls, name):
+        for user in cls.all.values():
+            if user.name == name:
+                return True
+        return False
+
     @property 
     def name(self):
         return self._name 
@@ -31,10 +38,14 @@ class User:
     @name.setter 
     def name(self, name):
         if isinstance(name, str) and len(name):
-            self._name = name
+            if not self.exists_in_all(name):
+                self._name = name
+            else:
+                raise TypeError(f"{name} already exists. Name must be unique.")
         else:
             raise TypeError ("Name mst be a non-empty string.")
-    
+
+
     @property
     def birth_year(self):
         return self._birth_year
@@ -132,7 +143,7 @@ class User:
         CONN.commit()
 
         del type(self).all[self.id]
-        seld.id = None
+        self.id = None
 
     @classmethod
     def create(cls, name, birth_year, gender, email, password):

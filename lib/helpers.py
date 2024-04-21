@@ -3,6 +3,7 @@ from models.artist import Artist, GENRES
 from models.song import Song
 from models.user import User
 from models.playlist import Playlist
+from models.palylist_enrollment import Playlist_enrollment
 
 
 def exit_program():
@@ -11,6 +12,8 @@ def exit_program():
 
 def login():
     print("\nGood to see you again!\n")
+    for user in User.all:
+        print(user)
     name = input("Enter your name: ")
     password = input("Enter your password: ")
     user = User.find_by_name(name)
@@ -125,7 +128,24 @@ def create_playlist(user):
     except Exception as exc:
         print("Error creating a playlist", exc)
 
-
+def add_song_to_playlist(user):
+    print("Add song to playlist\n")
+    Playlist_enrollment.create_table()
+    playlist_name = input("Enter the playlist name: ")
+    playlist = Playlist.get_all_by_user_n_name(int(user.id), playlist_name)
+    if playlist:
+        song_name = input(f"Enter the song name to add to {playlist_name} :")
+        song = Song.find_by_name(song_name)
+        if song: 
+            try:
+                enrollment = Playlist_enrollment.create(int(playlist.id), int(song.id))
+                print(f"{song.name} is successfly added to playlist {playlist.name}")
+            except Exception as exc:
+                print("Error creating an artist", exc)            
+        else: 
+            print(f"{song_name} not found")
+    else: 
+        print(f"{playlist_name} not found")
 
 
 

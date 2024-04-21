@@ -124,6 +124,15 @@ class Playlist:
         rows = CURSOR.execute(sql, (user_id, )).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
+    @classmethod 
+    def get_all_by_user_n_name(cls, user_id, name):
+        sql = """
+            SELECT * FROM playlists
+            WHERE user_id = ? AND name = ?
+        """ 
+        row = CURSOR.execute(sql, (user_id, name)).fetchone()
+        return cls.instance_from_db(row) if row else None
+
     @classmethod
     def find_by_id(cls, id):
         sql = """
