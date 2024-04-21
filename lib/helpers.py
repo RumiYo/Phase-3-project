@@ -16,7 +16,7 @@ def login():
     user = User.find_by_name(name)
     if user:
         if user.password == password:
-            print("You are successfuly logged in")
+            print("\nYou are successfuly logged in")
             return user
         else: 
             print("The password is wrong")
@@ -92,8 +92,11 @@ def add_song():
     except Exception as exc:
         print("Error creating a song", exc)
 
-def list_playlists():
-    print("Playlist list\n")    
+def list_playlists(user):
+    print(f"{user.name}'s Playlist list\n")    
+    playlists = Playlist.get_all_by_user(user.id)
+    for playlist in playlists:
+        print(f" - {playlist.name}")
     
 def open_playlist_by_name():
     print("Open Playlist\n")

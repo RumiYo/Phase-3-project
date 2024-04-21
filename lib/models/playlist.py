@@ -112,7 +112,16 @@ class Playlist:
         sql = """
             SELECT * FROM playlists
         """ 
-        row =CURSOR.execute(sql).fetchall()
+        rows = CURSOR.execute(sql).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
+
+    @classmethod 
+    def get_all_by_user(cls, user_id):
+        sql = """
+            SELECT * FROM playlists
+            WHERE user_id = ?
+        """ 
+        rows = CURSOR.execute(sql, (user_id, )).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
     @classmethod

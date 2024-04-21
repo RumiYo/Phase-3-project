@@ -81,8 +81,8 @@ def main():
                             while True: 
                                 if menu_playlists():
                                     choice = input("> ")
-                                    if choice == "1":   # 1. Open the list of playlists
-                                        list_playlists()
+                                    if choice == "1":   # 1. Open the list of playlists (logged-in users' playlists only)
+                                        list_playlists(logged_in_user)
                                     elif choice == "2":  # 2. Open a playlist
                                         open_playlist_by_name()
                                     elif choice == "3":  # 3. Create playlist
