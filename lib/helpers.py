@@ -2,6 +2,7 @@
 from models.artist import Artist, GENRES
 from models.song import Song
 from models.user import User
+from models.playlist import Playlist
 
 
 def exit_program():
@@ -15,11 +16,14 @@ def login():
     user = User.find_by_name(name)
     if user:
         if user.password == password:
-            return True
+            print("You are successfuly logged in")
+            return user
         else: 
             print("The password is wrong")
+            return None
     else: 
         print("The user name does not exist")
+        return None
 
 def signup():
     User.create_table()
@@ -91,11 +95,20 @@ def add_song():
 def list_playlists():
     print("Playlist list\n")    
     
-def open_playlist():
+def open_playlist_by_name():
     print("Open Playlist\n")
 
-def create_playlist():
+def create_playlist(user):
     print("Create Playlist\n")
+    # Playlist.create_table()
+    name = input("Enter playlist name: ")
+    user_info = user
+    print(name, user.id)
+    # try:
+    #     playlist = Playlist.create(name,user_id )
+    #     print(f"Playlist {playlist.name} is successfly created")
+    # except Exception as exc:
+    #     print("Error creating a playlist", exc)
 
 
 

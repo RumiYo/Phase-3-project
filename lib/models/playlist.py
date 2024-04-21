@@ -29,7 +29,7 @@ class Playlist:
     def user_id (self):
         return self._user_id
 
-    @user_id_id.setter
+    @user_id.setter
     def user_id(self, user_id):
         if isinstance(user_id, int) and 0 < user_id:
             self._user_id = user.id
