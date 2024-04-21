@@ -130,6 +130,15 @@ class Song:
         rows =CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
+    @classmethod 
+    def get_all_for_artist(cls, artist_id):
+        sql = """
+            SELECT * FROM songs
+            WHERE artist_id = ?
+        """ 
+        rows =CURSOR.execute(sql, (artist_id, )).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
+
     @classmethod
     def find_by_id(cls, id):
         sql = """

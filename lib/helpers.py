@@ -52,6 +52,12 @@ def find_artist_by_name():
     name = input("Enter the artist name: ")
     artist = Artist.find_by_name(name)
     print(artist) if artist else print (f'{name} not found')
+    songs = Song.get_all_for_artist(artist.id)
+    if songs: 
+        for song in songs:
+            print(f"  - {song.name} (Year: {song.year})")
+    else: 
+        print("  No songs registered for this artist")
 
 
 def add_artist():
@@ -95,11 +101,17 @@ def add_song():
 def list_playlists(user):
     print(f"{user.name}'s Playlist list\n")    
     playlists = Playlist.get_all_by_user(user.id)
-    for playlist in playlists:
-        print(f" - {playlist.name}")
+    if playlists:
+        for playlist in playlists:
+            print(f" - {playlist.name}")
+    else:
+        print("Playlist does not exist")
     
 def open_playlist_by_name():
     print("Open Playlist\n")
+    name = input("Enter the playlist name: ")
+    playlist = Playlist.find_by_name(name)
+    print(playlist.name) if playlist else print (f'{playlist} not found')
 
 def create_playlist(user):
     print("Create Playlist\n")

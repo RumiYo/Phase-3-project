@@ -136,7 +136,7 @@ class Playlist:
     @classmethod
     def find_by_name(cls,name):
         sql = """
-            SELECT * FROM playlist 
+            SELECT * FROM playlists 
             WHERE name = ?
         """
         row = CURSOR.execute(sql, (name,)).fetchone()
