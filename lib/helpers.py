@@ -100,15 +100,15 @@ def open_playlist_by_name():
 
 def create_playlist(user):
     print("Create Playlist\n")
-    # Playlist.create_table()
+    Playlist.create_table()
     name = input("Enter playlist name: ")
     user_info = user
-    print(name, user.id)
-    # try:
-    #     playlist = Playlist.create(name,user_id )
-    #     print(f"Playlist {playlist.name} is successfly created")
-    # except Exception as exc:
-    #     print("Error creating a playlist", exc)
+    try:
+        playlist = Playlist.create(name, int(user_info.id))
+        print(f"Playlist {playlist.name} is successfly created")
+        print(playlist)
+    except Exception as exc:
+        print("Error creating a playlist", exc)
 
 
 

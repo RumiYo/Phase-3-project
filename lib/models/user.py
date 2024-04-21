@@ -11,7 +11,7 @@ class User:
         4: "Prefer not to say"
     }
 
-    def __init__(self, name, birth_year, gender, email, password):
+    def __init__(self, name, birth_year, gender, email, password, id=None):
         self.id = id
         self.name = name
         self.birth_year = birth_year

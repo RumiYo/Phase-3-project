@@ -1,17 +1,19 @@
 from models.__init__ import CURSOR, CONN
+from models.user import User
 
 class Playlist:
 
     all = {}
 
-    def __init__(self, name, user_id):
+    def __init__(self, name, user_id, id=None):
         self.id = id
         self.name = name
         self.user_id = user_id
 
     def __repr__(self):
+        user = User.find_by_id(self.user_id)
         return(
-            f"<Playlist {self.name} ( user_id: {self.user_id}) >>"
+            f"<Playlist {self.name} (user_id: {user.name}) >>"
         )
 
     @property
@@ -31,19 +33,19 @@ class Playlist:
 
     @user_id.setter
     def user_id(self, user_id):
-        if isinstance(user_id, int) and 0 < user_id:
-            self._user_id = user.id
+        if isinstance(user_id, int) and 1 <= user_id <= len(User.all):
+            self._user_id = user_id
         else:
             raise TypeError("User ID must be a string")
 
     @classmethod 
     def create_table(cls):
         sql = """
-            CREATE TABLE IF NOT EXIST playlists (
+            CREATE TABLE IF NOT EXISTS playlists (
                 id INTEGER PRIMARY KEY,
                 name TEXT, 
                 user_id INTEGER,
-                FOREIGN KEY (user_id) EREFERENCES users(id)
+                FOREIGN KEY (user_id) REFERENCES users(id)
             )
         """
         CURSOR.execute(sql)
@@ -60,6 +62,7 @@ class Playlist:
     def save(self):
         sql = """
             INSERT INTO playlists (name, user_id)
+            VALUES (?, ?)
         """
         CURSOR.execute(sql, (self.name, self.user_id))
         CONN.commit()

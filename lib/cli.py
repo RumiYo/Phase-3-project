@@ -28,7 +28,7 @@ def main():
             if choice == "0":   # 0. Exit the program
                 exit_program()
             elif choice == "1":   # 1. Login
-                user = login()  # Call login() only when choice is "1"
+                user = login()  # Call login()
                 if user:
                     logged_in = True
                     logged_in_user = user  # Store the logged-in user globally
@@ -79,7 +79,7 @@ def main():
                         elif choice == "3":  # 3. Playlists
                                     
                             while True: 
-                                if menu_playllists():
+                                if menu_playlists():
                                     choice = input("> ")
                                     if choice == "1":   # 1. Open the list of playlists
                                         list_playlists()
@@ -146,8 +146,8 @@ def menu_songs():
     print("\n")
     return True
 
-def menu_playllists():
-    print("\Playlist\n")
+def menu_playlists():
+    print("\nPlaylist\n")
     print("1. Open the list of playlist")
     print("2. Open playlist by name")
     print("3. Create playlist")
