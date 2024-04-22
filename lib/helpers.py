@@ -12,9 +12,10 @@ def exit_program():
 
 def login():
     User.create_table()
-    print("\nGood to see you again!\n")
-    name = input("Enter your name: ")
-    password = input("Enter your password: ")
+    print("\n----------------------------------")
+    print("Good to see you again!\n")
+    name = input("  Enter your name: ")
+    password = input("  Enter your password: ")
     user = User.find_by_name(name)
     if user:
         if user.password == password:
@@ -81,7 +82,7 @@ def add_artist():
     print("Add artist\n")
     Artist.create_table()
     name = input("Enter artist name: ")
-    name_verify = Artist.find_by_name(name)
+    name_verify = Artist.find_by_name_full_match(name)
     if name_verify:
         print(f"\nError adding the artist: {name} already exists.")
     else:
