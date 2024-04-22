@@ -12,8 +12,6 @@ def exit_program():
 
 def login():
     print("\nGood to see you again!\n")
-    for user in User.all:
-        print(user)
     name = input("Enter your name: ")
     password = input("Enter your password: ")
     user = User.find_by_name(name)
@@ -32,17 +30,25 @@ def signup():
     User.create_table()
     print("\nCrate your account.\n")
     name = input("Enter your name: ")
-    birth_year = input("Enter your birth year: ")
-    print(f"Gender list: {User.GENDERS}")
-    gender = input("Enter your gender (Select a number from above): ")
-    email = input("Enter your email address: ")
-    password = input("Create password (minimum 8 charactors): ")
-    try: 
-        user = User.create(name, int(birth_year), int(gender), email, password)
-        print(f"{user.name} account is successfully created.")
-        return True
-    except Exception as exc:
-        print("Error creating a user account", exc)
+    name_info = User.find_by_name(name)
+    if name_info:
+        print(f"User name {name} exists already. Please try the other name.")
+    else: 
+        birth_year = input("Enter your birth year: ")
+        print(f"Gender list: {User.GENDERS}")
+        gender = input("Enter your gender (Select a number from above): ")
+        email = input("Enter your email address: ")
+        email_info = User.find_by_email(email)
+        if email_info:
+            print(f"{email} exists already. Please login with your account.")  
+        else:          
+            password = input("Create password (minimum 8 charactors): ")
+            try: 
+                user = User.create(name, int(birth_year), int(gender), email, password)
+                print(f"{user.name} account is successfully created.")
+                return True
+            except Exception as exc:
+                print("Error creating a user account", exc)
 
 def list_artists():
     print("Artist list\n")

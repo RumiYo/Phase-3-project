@@ -21,15 +21,9 @@ class User:
 
     def __repr__(self):
         return (
-            f"<User {self.name} (Gender: {self.gender}, Birth year: {self.birth_year}, Email address: {self.email})"
+            f"<User {self.name} (Gender: {self.gender}, Birth year: {self.birth_year}, Email address: {self.email}>)"
         )
 
-    @classmethod
-    def exists_in_all(cls, name):
-        for user in cls.all.values():
-            if user.name == name:
-                return True
-        return False
 
     @property 
     def name(self):
@@ -38,13 +32,9 @@ class User:
     @name.setter 
     def name(self, name):
         if isinstance(name, str) and len(name):
-            if not self.exists_in_all(name):
-                self._name = name
-            else:
-                raise TypeError(f"{name} already exists. Name must be unique.")
+            self._name = name
         else:
             raise TypeError ("Name mst be a non-empty string.")
-
 
     @property
     def birth_year(self):
@@ -134,6 +124,8 @@ class User:
         CURSOR.execute(sql, (self.name, self.birth_year, self.gender, self.email, self.password))
         CONN.commit()
 
+        type(self).all[self.id] = self  
+
     def delete(self):
         sql = """
             DELETE FROM users
@@ -190,4 +182,14 @@ class User:
             WHERE name = ?
         """
         row = CURSOR.execute(sql, (name, )).fetchone()
+        return cls.instance_from_db(row) if row else None
+
+
+    @classmethod
+    def find_by_email(cls, email):
+        sql = """
+            SELECT  * FROM users
+            WHERE email = ?
+        """
+        row = CURSOR.execute(sql, (email, )).fetchone()
         return cls.instance_from_db(row) if row else None
