@@ -105,6 +105,8 @@ class Artist:
         """
         COURSOR.execute(sql, (self.name, self.country, self.genre_id, self.id))
         CON.commit()
+
+        type(self).all[self.id] = self  
     
     def delete(self):
         sql = """

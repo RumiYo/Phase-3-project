@@ -30,16 +30,16 @@ def signup():
     User.create_table()
     print("\nCrate your account.\n")
     name = input("Enter your name: ")
-    name_info = User.find_by_name(name)
-    if name_info:
+    name_verify = User.find_by_name(name)
+    if name_verify:
         print(f"User name {name} exists already. Please try the other name.")
     else: 
         birth_year = input("Enter your birth year: ")
         print(f"Gender list: {User.GENDERS}")
         gender = input("Enter your gender (Select a number from above): ")
         email = input("Enter your email address: ")
-        email_info = User.find_by_email(email)
-        if email_info:
+        email_ = User.find_by_email(email)
+        if email_verify:
             print(f"{email} exists already. Please login with your account.")  
         else:          
             password = input("Create password (minimum 8 charactors): ")
@@ -60,7 +60,7 @@ def find_artist_by_name():
     print("Find artist\n")
     name = input("Enter the artist name: ")
     artist = Artist.find_by_name(name)
-    print(artist) if artist else print (f'{name} not found')
+    print(f"\n{artist}") if artist else print (f'{name} not found')
     songs = Song.get_all_for_artist(artist.id)
     if songs: 
         for song in songs:
@@ -73,14 +73,18 @@ def add_artist():
     print("Add artist\n")
     Artist.create_table()
     name = input("Enter artist name: ")
-    country = input("Enter what country the artist is from: ")
-    print(f"Genre list: {GENRES}")
-    genre_id =input ("Enter genre number from the list above: ")
-    try:
-        artist = Artist.create(name, country, int(genre_id))
-        print(f"{artist.name} is successfly added to the artist list")
-    except Exception as exc:
-        print("Error creating an artist", exc)
+    name_verify = Artist.find_by_name(name)
+    if name_verify:
+        print(f"\nError adding the artist: {name} already exists.")
+    else:
+        country = input("Enter what country the artist is from: ")
+        print(f"Genre list: {GENRES}")
+        genre_id =input ("Enter genre number from the list above: ")
+        try:
+            artist = Artist.create(name, country, int(genre_id))
+            print(f"{artist.name} is successfly added to the artist list")
+        except Exception as exc:
+            print("\nError creating an artist", exc)
 
 def list_songs():
     print("Song list\n")
@@ -98,14 +102,18 @@ def add_song():
     print("Add song\n")
     Song.create_table()
     name = input("Enter song name: ")
+    name_verify = Song.find_by_name(name)
     year = input("Enter the release year: ")
     artist_name = input("Enter the artist name: ")
     artist = Artist.find_by_name(artist_name)
-    try:
-        song = Song.create(name, int(year), int(artist.id))
-        print(f"{song.name} is successfly added to the song list")
-    except Exception as exc:
-        print("Error creating a song", exc)
+    if name_verify and artist:
+        print(f"\nError adding a song: {name} ({artist_name}) already exists.")
+    else:
+        try:
+            song = Song.create(name, int(year), int(artist.id))
+            print(f"\n{song.name} is successfly added to the song list")
+        except Exception as exc:
+            print("Error adding a song", exc)
 
 def list_playlists(user):
     print(f"{user.name}'s Playlist list\n")    
@@ -116,23 +124,26 @@ def list_playlists(user):
     else:
         print("Playlist does not exist")
     
-def open_playlist_by_name():
+def open_playlist_by_name(user):
     print("Open Playlist\n")
     name = input("Enter the playlist name: ")
-    playlist = Playlist.find_by_name(name)
-    print(playlist.name) if playlist else print (f'{playlist} not found')
+    playlist = Playlist.get_all_by_user_n_name(user.id, name)
+    print(playlist.name) if playlist else print (f'{name} not found')
 
 def create_playlist(user):
     print("Create Playlist\n")
     Playlist.create_table()
     name = input("Enter playlist name: ")
-    user_info = user
-    try:
-        playlist = Playlist.create(name, int(user_info.id))
-        print(f"Playlist {playlist.name} is successfly created")
-        print(playlist)
-    except Exception as exc:
-        print("Error creating a playlist", exc)
+    name_verify = Playlist.get_all_by_user_n_name(user.id, name)
+    if name_verify:
+        print(f"Error creating playlist: Playlist {name} already exists")
+    else:
+        try:
+            playlist = Playlist.create(name, int(user.id))
+            print(f"Playlist {playlist.name} is successfly created")
+            print(playlist)
+        except Exception as exc:
+            print("Error creating a playlist", exc)
 
 def add_song_to_playlist(user):
     print("Add song to playlist\n")

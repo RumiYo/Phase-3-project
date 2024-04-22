@@ -33,7 +33,7 @@ class Playlist:
 
     @user_id.setter
     def user_id(self, user_id):
-        if isinstance(user_id, int) and 1 <= user_id <= len(User.all):
+        if isinstance(user_id, int) and 1 <= user_id:
             self._user_id = user_id
         else:
             raise TypeError("User ID must be a string")
@@ -79,6 +79,8 @@ class Playlist:
         CURSOR.execute(sql, (self.name, self.user_id, self.id))
         CONN.commit()
 
+        type(self).all[self.id] = self  
+
     def delete(self):
         sql = """
             DELETE FROM playlists
@@ -122,7 +124,7 @@ class Playlist:
             WHERE user_id = ?
         """ 
         rows = CURSOR.execute(sql, (user_id, )).fetchall()
-        return [cls.instance_from_db(row) for row in rows]
+        return [cls.instance_from_db(row) for row in rows]if rows else None
 
     @classmethod 
     def get_all_by_user_n_name(cls, user_id, name):

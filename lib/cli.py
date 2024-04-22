@@ -85,7 +85,7 @@ def main():
                                     if choice == "1":   # 1. Open the list of playlists (logged-in users' playlists only)
                                         list_playlists(logged_in_user)
                                     elif choice == "2":  # 2. Open a playlist
-                                        open_playlist_by_name()
+                                        open_playlist_by_name(logged_in_user)
                                     elif choice == "3":  # 3. Create playlist
                                         create_playlist(logged_in_user)
                                     elif choice == "4":  # 4. Add song to a playlist

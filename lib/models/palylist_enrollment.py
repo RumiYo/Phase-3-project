@@ -71,6 +71,8 @@ class Playlist_enrollment:
         """
         CURSOR.execute(sql, (self.playlist_id, self.song_id))
         CONN.commit()
+        
+        type(self).all[self.id] = self  
 
     def delete(self):
         sql = """
