@@ -148,7 +148,7 @@ class Playlist:
     def find_by_name(cls,name):
         sql = """
             SELECT * FROM playlists 
-            WHERE name = ?
+            WHERE LOWER(name) = LOWER(?)
         """
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None

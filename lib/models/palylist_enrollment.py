@@ -1,4 +1,7 @@
 from models.__init__ import CURSOR, CONN
+from models.playlist import Playlist
+from models.song import Song
+from models.artist import Artist
 
 class Playlist_enrollment:
 
@@ -10,7 +13,10 @@ class Playlist_enrollment:
         self.song_id = song_id
     
     def __repr__(self):
-        return (f"<Playlist Enrollment (playlist_id: {self.playlist_id}, song_id: {self.song_id}>")
+        song = Song.find_by_id(self.song_id)
+        artist = Artist.find_by_id(song.artist_id)
+        playlist = Playlist.find_by_id(self.playlist_id)
+        return (f" - {song.name} ({artist.name}, {song.year})")
 
     @property
     def playlist_id(self):
@@ -37,7 +43,7 @@ class Playlist_enrollment:
                 id INTEGER PRIMARY KEY,
                 playlist_id INTEGER,
                 song_id INTEGER,
-                FOREIGN KEY (playlist_id) REFERENCES playlists(id)
+                FOREIGN KEY (playlist_id) REFERENCES playlists(id),
                 FOREIGN KEY (song_id) REFERENCES songs(id)
             )
         """
@@ -49,7 +55,7 @@ class Playlist_enrollment:
         sql = """
             DROP TABLE IF EXISTS playlist_enrollments;
         """
-        CORSOR.execute(sql)
+        CURSOR.execute(sql)
         CONN.commit()
     
     def save(self):
@@ -69,7 +75,7 @@ class Playlist_enrollment:
             SET playlist_id = ?, song_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.playlist_id, self.song_id))
+        CURSOR.execute(sql, (self.playlist_id, self.song_id, self.id))
         CONN.commit()
         
         type(self).all[self.id] = self  
@@ -126,13 +132,4 @@ class Playlist_enrollment:
             WHERE id = ?
         """
         row = CURSOR.execute(sql, (id, )).fetchone()
-        return cls.instance_from_db(row) if row else None
-
-    @classmethod
-    def find_by_name(cls, name):
-        sql = """
-            SELECT * FROM playlist_enrollments
-            WHERE name = ?
-        """
-        row = CURSOR.execute(sql, (name, )).fetchone()
         return cls.instance_from_db(row) if row else None

@@ -14,7 +14,8 @@ from helpers import (
     list_playlists,
     open_playlist_by_name,
     create_playlist,
-    add_song_to_playlist
+    add_song_to_playlist,
+    Remove_song_from_playlist
 
 )
 
@@ -93,7 +94,9 @@ def main():
                                         create_playlist(logged_in_user)
                                     elif choice == "4":  # 4. Add song to a playlist
                                         add_song_to_playlist(logged_in_user)
-                                    elif choice == "5":  # 5. Return to Main page
+                                    elif choice == "5":  # 5. Add song to a playlist
+                                        Remove_song_from_playlist(logged_in_user)
+                                    elif choice == "6":  # 6. Return to Main page
                                         break
                                     elif choice == "0":  # 0. Exit the program
                                         exit_program()
@@ -139,7 +142,7 @@ def menu_artists():
     print("\n----------------------------------")
     print("Artists\n")
     print("  1. Open the list of artists")
-    print("  2. Find artist by name")
+    print("  2. Find artists by name")
     print("  3. Add artist")
     print("  4. Return to Main page")
     print("  0. Exit the program")
@@ -164,8 +167,9 @@ def menu_playlists():
     print("  1. Open the list of playlist")
     print("  2. Open playlist by name")
     print("  3. Create playlist")
-    print("  4. Add song to a playlist")
-    print("  5. Return to Main page")
+    print("  4. Add song to playlist")
+    print("  5. Remove song from playlist")
+    print("  6. Return to Main page")
     print("  0. Exit the program")
     print("\n")
     return True    

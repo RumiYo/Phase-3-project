@@ -120,16 +120,19 @@ def add_song():
     name_verify = Song.find_by_name_full_match(name)
     year = input("Enter the release year: ")
     artist_name = input("Enter the artist name: ")
-    artist = Artist.find_by_name_full_match(artist_name)
-    if name_verify and artist:
-        print(f"\nError adding a song: {name} ({artist_name}) already exists.")
+    artist_verify = Artist.find_by_name_full_match(artist_name)
+    if artist_verify:
+        if name_verify:
+            print(f"\nError adding a song: {name} ({artist_name}) already exists.")
+        else:
+            try:
+                song = Song.create(name, int(year), int(artist_verify.id))
+                print(f"\n{song.name} is successfly added")
+                print(song)
+            except Exception as exc:
+                print("Error adding a song", exc)
     else:
-        try:
-            song = Song.create(name, int(year), int(artist.id))
-            print(f"\n{song.name} is successfly added")
-            print(song)
-        except Exception as exc:
-            print("Error adding a song", exc)
+        print(f'Artist name "{artist_name}" not found')
 
 def remove_song():
     print("Remove song\n")
@@ -192,8 +195,8 @@ def add_song_to_playlist(user):
     playlist_name = input("Enter the playlist name: ")
     playlist = Playlist.get_all_by_user_n_name(int(user.id), playlist_name)
     if playlist:
-        song_name = input(f"Enter the song name to add to {playlist_name} :")
-        song = Song.find_by_name(song_name)
+        song_name = input(f"Enter the song name to add to {playlist_name}:")
+        song = Song.find_by_name_full_match(song_name)
         if song: 
             try:
                 enrollment = Playlist_enrollment.create(int(playlist.id), int(song.id))
@@ -201,7 +204,27 @@ def add_song_to_playlist(user):
             except Exception as exc:
                 print("Error creating an artist", exc)            
         else: 
-            print(f"{song_name} not found")
+            print(f'"{song_name}" not found')
+    else: 
+        print(f"{playlist_name} not found")
+
+
+def Remove_song_from_playlist(user):
+    print("Remove song from playlist\n")
+    Playlist_enrollment.create_table()
+    playlist_name = input("Enter the playlist name: ")
+    playlist = Playlist.get_all_by_user_n_name(int(user.id), playlist_name)
+    if playlist:
+        song_name = input(f"Enter the song name to remove from {playlist_name}:")
+        song = Song.find_by_name_full_match(song_name)
+        if song: 
+            try:
+                Playlist_enrollment.delete(song)
+                print(f"{song.name} is successfly deleted to playlist {playlist.name}")
+            except Exception as exc:
+                print("Error creating an artist", exc)            
+        else: 
+            print(f'"{song_name}" not found')
     else: 
         print(f"{playlist_name} not found")
 
