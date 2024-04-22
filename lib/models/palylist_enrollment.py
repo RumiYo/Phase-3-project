@@ -133,3 +133,13 @@ class Playlist_enrollment:
         """
         row = CURSOR.execute(sql, (id, )).fetchone()
         return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_registry(cls, playlist_id, song_id):
+        sql = """
+            SELECT * FROM playlist_enrollments
+            WHERE playlist_id = ? and song_id = ?
+        """
+        row = CURSOR.execute(sql, (playlist_id, song_id )).fetchone()
+        return cls.instance_from_db(row) if row else None
+

@@ -30,8 +30,8 @@ def main():
             choice = input("> ")
             if choice == "0":   # 0. Exit the program
                 exit_program()
-            elif choice == "1":   # 1. Login
-                user = login()  # Call login()
+            elif choice in ("1", "2"):   # 1. Login
+                user = login()  if choice == "1" else signup()
                 if user:
                     logged_in = True
                     logged_in_user = user  # Store the logged-in user globally
@@ -39,10 +39,11 @@ def main():
                     while True: 
                         main_page()
                         choice = input("> ")
+
                         if choice == "0":
                             exit_program()
-                        elif choice == "1":  #1. Artists   
 
+                        elif choice == "1":  #1. Artists   
                             while True: 
                                 if menu_artists():
                                     choice = input("> ")
@@ -61,7 +62,6 @@ def main():
                                         print("Invalid choice")
 
                         elif choice == "2": # 2. Songs
-                            
                             while True: 
                                 if menu_songs():
                                     choice = input("> ")
@@ -81,8 +81,7 @@ def main():
                                     else: 
                                         print("Invalid choice") 
 
-                        elif choice == "3":  # 3. Playlists
-                                    
+                        elif choice == "3":  # 3. Playlists        
                             while True: 
                                 if menu_playlists():
                                     choice = input("> ")
@@ -107,13 +106,10 @@ def main():
                         elif choice == "00":  # 00. Sign Out
                             logged_in = False
                             break 
+                        
                         else:
                             print("Invalid choice")
 
-            elif choice == "2":  # 2. Signin
-                if signup():
-                    logged_in = True 
-                    main_page()
             else:
                 print("Invalid choice")
 

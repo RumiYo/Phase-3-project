@@ -130,7 +130,7 @@ class Playlist:
     def get_all_by_user_n_name(cls, user_id, name):
         sql = """
             SELECT * FROM playlists
-            WHERE user_id = ? AND name = ?
+            WHERE user_id = ? AND LOWER(name) = LOWER(?)
         """ 
         row = CURSOR.execute(sql, (user_id, name)).fetchone()
         return cls.instance_from_db(row) if row else None
