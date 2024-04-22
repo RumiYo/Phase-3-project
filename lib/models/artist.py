@@ -24,7 +24,7 @@ class Artist:
         self.genre_id = genre_id
 
     def __repr__(self):
-        return f"<Artist{self.id} {self.name} (country: {self.country}, genre: {GENRES.get(self.genre_id)})>"
+        return f" - {self.name} ({GENRES.get(self.genre_id)}, {self.country}) "
 
     @property 
     def name(self):

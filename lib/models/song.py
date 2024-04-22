@@ -14,9 +14,9 @@ class Song:
     def __repr__(self):
         artist = Artist.find_by_id(self.artist_id)
         return (
-            f"<Song {self.id}: {self.name} (Artist: {artist.name}, Year: {self.year})>"
+            f" - {self.name} ({artist.name}, {self.year})"
         )
-    
+
     @property
     def name(self):
         return self._name

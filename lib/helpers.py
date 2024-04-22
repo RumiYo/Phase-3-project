@@ -76,7 +76,7 @@ def find_artist_by_name():
             songs = Song.get_all_for_artist(artist.id)
             if songs: 
                 for song in songs:
-                    print(f"  - {song.name} (Year: {song.year})")
+                    print(f"    - {song.name} ({song.year})")
             else: 
                 print("  No songs registered for this artist")
 
