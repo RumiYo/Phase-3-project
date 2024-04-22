@@ -10,7 +10,7 @@ class Playlist_enrollment:
         self.song_id = song_id
     
     def __repr__(self):
-        return (f"<Playlist {self.playlist_id}: {self.song_id}>")
+        return (f"<Playlist Enrollment (playlist_id: {self.playlist_id}, song_id: {self.song_id}>")
 
     @property
     def playlist_id(self):
@@ -94,7 +94,7 @@ class Playlist_enrollment:
     def instance_from_db(cls, row):
         enrollment = cls.all.get(row[0])
         if enrollment:
-            enrollement.playlist_id = row[1]
+            enrollment.playlist_id = row[1]
             enrollment.song_id = row[2]
         else:
             enrollment = cls(row[0], row[1], row[2])
@@ -108,6 +108,15 @@ class Playlist_enrollment:
             SELECT * FROM playlist_enrollments
         """
         rows = CURSOR.execute(sql).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
+
+    @classmethod 
+    def get_all_songs_for_playlist(cls, playlist_id):
+        sql = """
+            SELECT * FROM playlist_enrollments
+            WHERE playlist_id = ?
+        """
+        rows = CURSOR.execute(sql, (playlist_id, )).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
     @classmethod
