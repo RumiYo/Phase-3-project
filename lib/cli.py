@@ -4,6 +4,7 @@ from helpers import (
     exit_program,
     login,
     signup,
+    change_password,
     list_artists,
     find_artist_by_name,
     add_artist,
@@ -106,9 +107,11 @@ def main():
                         elif choice == "00":  # 00. Sign Out
                             logged_in = False
                             break 
-                        
+
                         else:
                             print("Invalid choice")
+            elif choice == "3": 
+                change_password()
 
             else:
                 print("Invalid choice")
@@ -119,9 +122,10 @@ def login_page():
     print("* Welcome to Music player! *")
     print("****************************\n")
     print("Please select an option:\n")
-    print("  0. Exit the program")
     print("  1. Login")
     print("  2. Create your account")
+    print("  3. Change password")
+    print("  0. Exit the program")
     print("\n")
 
 def main_page():

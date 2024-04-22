@@ -55,6 +55,30 @@ def signup():
                 print("Error creating a user account", exc)
                 return None
 
+def change_password():
+    name = input("  Enter your name: ")
+    user = User.find_by_name(name)
+    if user:
+        password = input("  Enter your current password: ")
+        if user.password == password:
+            new_password = input("  Enter new password: ")
+            user.password = new_password
+            user_updated = User.update(user)
+            try: 
+                print(f"{user_updated.name}'s password is updated")
+            except Exception as exc:
+                print("Error changing password", exc)
+                return None
+
+        else: 
+            print("\nThe password is wrong")
+            return None
+    else: 
+        print("\nThe user name does not exist")
+        return None    
+
+    
+
 def list_artists():
     Artist.create_table()
     print("Artist list\n")

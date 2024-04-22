@@ -121,10 +121,11 @@ class User:
             SET name = ?, birth_year = ?, gender = ?, email = ?, password = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.birth_year, self.gender, self.email, self.password))
+        CURSOR.execute(sql, (self.name, self.birth_year, self.gender, self.email, self.password, self.id))
         CONN.commit()
 
         type(self).all[self.id] = self  
+        return self
 
     def delete(self):
         sql = """
