@@ -131,6 +131,18 @@ def add_song():
         except Exception as exc:
             print("Error adding a song", exc)
 
+def remove_song():
+    print("Remove song\n")
+    Song.create_table()
+    name = input("Enter song name: ")
+    song_verify = Song.find_by_name_full_match(name)
+    if song_verify:
+        Song.delete(song_verify)
+        print(f"\n{name} is successfly added")
+    else:
+        print (f'Song name "{name}" not found')
+
+
 def list_playlists(user):
     Playlist.create_table()
     print(f"{user.name}'s Playlist list\n")    

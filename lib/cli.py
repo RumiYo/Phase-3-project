@@ -10,6 +10,7 @@ from helpers import (
     list_songs,
     find_song_by_name,
     add_song,
+    remove_song,
     list_playlists,
     open_playlist_by_name,
     create_playlist,
@@ -69,7 +70,9 @@ def main():
                                         find_song_by_name()
                                     elif choice == "3":  # 3. Add a song"
                                         add_song()
-                                    elif choice == "4":  # 4. Return to Main page
+                                    elif choice == "4":  # 4. Remove a song"
+                                        remove_song()
+                                    elif choice == "5":  # 5. Return to Main page
                                         break
                                     elif choice == "0":  # 0. Exit the program
                                         exit_program()
@@ -149,7 +152,8 @@ def menu_songs():
     print("  1. Open the whole list of songs")
     print("  2. Find song by name")
     print("  3. Add song")
-    print("  4. Return to Main page")
+    print("  4. Remove song")    
+    print("  5. Return to Main page")
     print("  0. Exit the program")
     print("\n")
     return True
