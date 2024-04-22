@@ -151,10 +151,21 @@ class Song:
         return cls.instance_from_db(row) if row else None
     
     @classmethod
-    def find_by_name(cls,name):
+    def find_by_name_full_match(cls,name):
         sql = """
             SELECT * FROM songs 
             WHERE LOWER(name) = LOWER(?)
         """
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
+
+    
+    @classmethod
+    def find_by_name_partial_match(cls, name):
+        sql = """
+            SELECT * FROM songs
+            WHERE LOWER(name) like LOWER(?)
+        """
+        search_term = '%' + name + '%'
+        rows = CURSOR.execute(sql,(search_term,)).fetchall()
+        return [cls.instance_from_db(row) for row in rows] if rows else None

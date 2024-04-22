@@ -22,10 +22,10 @@ def login():
             print("\nYou are successfuly logged in")
             return user
         else: 
-            print("The password is wrong")
+            print("\nThe password is wrong")
             return None
     else: 
-        print("The user name does not exist")
+        print("\nThe user name does not exist")
         return None
 
 def signup():
@@ -105,17 +105,22 @@ def list_songs():
 def find_song_by_name():
     print("Find song\n")
     name = input("Enter the song name: ")
-    song = Song.find_by_name(name)
-    print(song) if song else print (f'{name} not found')
+    songs = Song.find_by_name_partial_match(name)
+    if not songs:
+        print (f'Song name "{name}" not found')
+    else:
+        for song in songs:
+            print(song)      
+
 
 def add_song():
     print("Add song\n")
     Song.create_table()
     name = input("Enter song name: ")
-    name_verify = Song.find_by_name(name)
+    name_verify = Song.find_by_name_full_match(name)
     year = input("Enter the release year: ")
     artist_name = input("Enter the artist name: ")
-    artist = Artist.find_by_name(artist_name)
+    artist = Artist.find_by_name_full_match(artist_name)
     if name_verify and artist:
         print(f"\nError adding a song: {name} ({artist_name}) already exists.")
     else:
