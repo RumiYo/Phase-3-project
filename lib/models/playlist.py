@@ -127,10 +127,20 @@ class Playlist:
         return [cls.instance_from_db(row) for row in rows]if rows else None
 
     @classmethod 
+    def get_all_by_user_n_name_partial_match(cls, user_id, name):
+        sql = """
+            SELECT * FROM playlists
+            WHERE user_id = ? AND LOWER(name) like LOWER(?)
+        """ 
+        search_term =  '%' + name + '%'
+        rows = CURSOR.execute(sql, (user_id, search_term)).fetchall()
+        return [cls.instance_from_db(row) for row in rows]if rows else None
+
+    @classmethod 
     def get_all_by_user_n_name(cls, user_id, name):
         sql = """
             SELECT * FROM playlists
-            WHERE user_id = ? AND LOWER(name) = LOWER(?)
+            WHERE user_id = ? AND LOWER(name) == LOWER(?)
         """ 
         row = CURSOR.execute(sql, (user_id, name)).fetchone()
         return cls.instance_from_db(row) if row else None

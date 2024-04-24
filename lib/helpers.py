@@ -63,8 +63,8 @@ def change_password():
         if user.password == password:
             new_password = input("  Enter new password: ")
             user.password = new_password
-            user_updated = User.update(user)
             try: 
+                user_updated = User.update(user)
                 print(f"{user_updated.name}'s password is updated")
             except Exception as exc:
                 print("Error changing password", exc)
@@ -187,17 +187,18 @@ def open_playlist_by_name(user):
     Playlist.create_table()
     print("Open Playlist\n")
     name = input("Enter the playlist name: ")
-    playlist = Playlist.get_all_by_user_n_name(user.id, name)
-    if playlist:
-        print(f"\n<Playlist: {playlist.name}>") 
-        enrollments = Playlist_enrollment.get_all_songs_for_playlist(playlist.id)
-        if enrollments: 
-            for enrollment in enrollments:
-                song_info = Song.find_by_id(enrollment.song_id)
-                print(enrollment)
-                # print(f"  - {song_info.name} (Year: {song_info.year})")
-        else: 
-            print("  No songs registered for this playlist")
+    playlists = Playlist.get_all_by_user_n_name_partial_match(user.id, name)
+    if playlists:
+        for playlist in playlists:
+            print(f"\n<Playlist: {playlist.name}>") 
+            enrollments = Playlist_enrollment.get_all_songs_for_playlist(playlist.id)
+            if enrollments: 
+                for enrollment in enrollments:
+                    song_info = Song.find_by_id(enrollment.song_id)
+                    print(enrollment)
+                    # print(f"  - {song_info.name} (Year: {song_info.year})")
+            else: 
+                print("  No songs registered for this playlist")
     else:
         print (f'Playlist {name} not found')
 
