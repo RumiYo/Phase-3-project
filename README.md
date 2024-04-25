@@ -1,18 +1,43 @@
-# Phase 3 CLI+ORM Project Template
+# Music App
+Flatiron School Software engineer course phase 3 project
 
-## Learning Goals
+## Table of Contents
+* [Phase 3 project requirement](#phase-3-project-requirements)
+* [My Python CLI application](#my-Python-CLI-application)
+* [Technologies](#technologies)
+* [API](#api-data-source)
 
-- Discuss the basic directory structure of a CLI.
-- Outline the first steps in building a CLI.
 
----
+## Phase 3 project requirements
 
-## Introduction
+[Project guidelines are here. ](https://github.com/learn-co-curriculum/python-p3-v2-final-project)
 
-You now have a basic idea of what constitutes a CLI. Fork and clone this lesson
-for a project template for your CLI.
+You need to implement a Python CLI Application that meets the following requirements.
 
-Take a look at the directory structure:
+### ORM Requirements
+The application must include a database created and modified with Python ORM methods that you write.
+
+ * The data model must include at least 2 model classes.
+ * The data model must include at least 1 one-to-many relationship.
+ * Property methods should be defined to add appropriate constraints to each model class.
+ * Each model class should include ORM methods (create, delete, get all, and find by id at minimum).
+
+### CLI Requirements
+ * The CLI must display menus with which a user may interact.
+ * The CLI should use loops as needed to keep the user in the application until they choose to exit.
+ * For EACH class in the data model, the CLI must include options: to create an object, delete an object, display all objects, view related objects, and find an object by attribute.
+ * The CLI should validate user input and object creations/deletions, providing informative errors to the user.
+ * The project code should follow OOP best practices.
+ * Pipfile contains all needed dependencies and no unneeded dependencies.
+ * Imports are used in files only where necessary.
+ * Project folders, files, and modules should be organized and follow appropriate naming conventions.
+ * The project should include a README.md that describes the application.
+
+## My Python CLI Application
+
+## My Technologies
+
+### Directory Storucture
 
 ```console
 .
@@ -22,17 +47,30 @@ Take a look at the directory structure:
 └── lib
     ├── models
     │   ├── __init__.py
-    │   └── model_1.py
+    │   └── artist.py
+    │   └── playlist_enrollment.py
+    │   └── playlist.py
+    │   └── song.py  
+    │   └── user.py  
     ├── cli.py
     ├── debug.py
     └── helpers.py
+    └── company.db    
 ```
 
-Note: The directory also includes two files named `CONTRIBUTING.md` and
-`LICENSE.md` that are specific to Flatiron's curriculum. You can disregard or
-delete the files if you want.
+## Resources
+
+- [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
+
 
 ---
+
+## Learning Goals
+
+- Discuss the basic directory structure of a CLI.
+- Outline the first steps in building a CLI.
+
+
 
 ## Generating Your Environment
 
