@@ -35,6 +35,7 @@ The application must include a database created and modified with Python ORM met
 
 ## My Python CLI Application
 The music app where you can find various kinds of music and also give your flavor by adding your favorite musicians and songs.
+
 [![Music App](http://img.youtube.com/vi/oqulOwIfZXw/0.jpg)](http://www.youtube.com/watch?v=oqulOwIfZXw)
 
 ## My Technologies
