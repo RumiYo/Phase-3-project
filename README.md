@@ -5,7 +5,7 @@ Flatiron School Software engineer course phase 3 project
 * [Phase 3 project requirement](#phase-3-project-requirements)
 * [My Python CLI application](#my-Python-CLI-application)
 * [Technologies](#technologies)
-* [API](#api-data-source)
+* [Resources](#resources)
 
 
 ## Phase 3 project requirements
@@ -82,8 +82,40 @@ elif choice == "1":  #1. Artists
                                         print("Invalid choice")
 ```
 
+### Adding layered menu
+The app page was structured like below.
+```
+Login menu
+└── Main menu
+    ├── Artist menu
+    ├── Song menu
+    ├── Playlist menu
+```
+Since `while True` was set for login page, the loop continued running.  In order to stop the loop move users from login page loop, I create logged_in and used it as a condition of loop. With this, users successflly move to the main page after logging in or signing in. 
+```
+def main():
+    logged_in = False
+
+    while True:    
+        while not logged_in:  # Add a loop to continue until a valid login is performed
+            login_page()
+            choice = input("> ")
+            if choice == "0":   # 0. Exit the program
+                exit_program()
+            elif choice in ("1", "2"):   # 1. Login
+                user = login()  if choice == "1" else signup()
+                if user:
+                    logged_in = True
+                    logged_in_user = user  # Store the logged-in user globally
+            
+                    while True: 
+                        main_page()
+                        choice = input("> ")
+
+```
+
 ### Additional method on Model class
-Some methods were added on Playlist class.
+Some methods were added in each model classes.  Below is the method from Playlist class.
 This method was added to pull the data with multiple conditions. Also, by using "like" and "%", we can fetch all data which includes the input value.
 ```
     @classmethod 
@@ -97,9 +129,10 @@ This method was added to pull the data with multiple conditions. Also, by using 
             return [cls.instance_from_db(row) for row in rows]if rows else None
 ```
 
+
 ## Resources
 
 - [Build a CLI Application in Python [Book Store Application]](https://youtu.be/kTaqR1WyT8A?si=34tY6hPUR5JVX0En)
 - [Sample of CLI menus in action](https://youtu.be/4UIYd00J0ok?si=jYeLHOA7QVFcLgsT)
-https://learnsql.com/blog/using-like-match-patterns-sql/
+- [SQL: Using like match patterns](https://learnsql.com/blog/using-like-match-patterns-sql/)
 - [README Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
