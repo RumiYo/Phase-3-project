@@ -1,10 +1,10 @@
 # Music App
-Flatiron School Software engineer course phase 3 project
+Flatiron School Software Engineer course Phase 3 project
 
 ## Table of Contents
 * [Phase 3 project requirement](#phase-3-project-requirements)
-* [My Python CLI application](#my-Python-CLI-application)
-* [Technologies](#technologies)
+* [My Python CLI application](#my-python-cli-application)
+* [Technologies](#my-technologies)
 * [Resources](#resources)
 
 
@@ -34,11 +34,11 @@ The application must include a database created and modified with Python ORM met
  * The project should include a README.md that describes the application.
 
 ## My Python CLI Application
-The music app where you can find various musics and also give your flavour by adding your favorite musicians and songs.
-
+The music app where you can find various kinds of music and also give your flavor by adding your favorite musicians and songs.
+[![Music App](http://img.youtube.com/vi/oqulOwIfZXw/0.jpg)](http://www.youtube.com/watch?v=oqulOwIfZXw)
 
 ## My Technologies
-### Directory Storucture
+### Directory Structure
 
 ```console
 .
@@ -60,8 +60,8 @@ The music app where you can find various musics and also give your flavour by ad
 ```
 
 ### `while True` loop for CLI
-`while True` creates loop and continue running until `break` get executed.
-`while True` is used to show all menus (login_page, main_page, menu_artists, menu_songs and menu_playlists)
+`while True` creates a loop and continues running until `break` gets executed.
+`while True` is used to show all menus (login_page, main_page, menu_artists, menu_songs, and menu_playlists)
 ```
 elif choice == "1":  #1. Artists   
                             while True: 
@@ -69,7 +69,7 @@ elif choice == "1":  #1. Artists
                                     choice = input("> ")
                                     if choice == "1":   # 1. Open the list of artist
                                         list_artists()
-                                    elif choice == "2":  # 2. Find artist by name
+                                    elif choice == "2":  # 2. Find artists by name
                                         find_artist_by_name()
                                     elif choice == "3":  # 3. Add artist"
                                         add_artist()
@@ -89,9 +89,9 @@ Login menu
 └── Main menu
     ├── Artist menu
     ├── Song menu
-    ├── Playlist menu
+    └──  Playlist menu
 ```
-Since `while True` was set for login page, the loop continued running.  In order to stop the loop move users from login page loop, I create logged_in and used it as a condition of loop. With this, users successflly move to the main page after logging in or signing in. 
+Since `while True` was set for login page, the loop continued running.  In order to stop the loop and move users from the login page, I created "logged_in" and used it as a condition of the loop. With this, users successfully move to the main page after logging in or signing in. 
 ```
 def main():
     logged_in = False
@@ -114,8 +114,8 @@ def main():
 
 ```
 
-### Additional method on Model class
-Some methods were added in each model classes.  Below is the method from Playlist class.
+### Additional method on the Model classes
+Some methods were added in each model class.  Below is the method from the Playlist class.
 This method was added to pull the data with multiple conditions. Also, by using "like" and "%", we can fetch all data which includes the input value.
 ```
     @classmethod 
