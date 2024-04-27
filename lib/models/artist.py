@@ -23,7 +23,7 @@ class Artist:
         self._country = country
         self._genre_id = genre_id
 
-    def __repr__(self):
+    def __str__(self):
         return f" - {self.name} ({GENRES.get(self.genre_id)}, {self.country}) "
 
     @property 

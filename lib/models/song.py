@@ -11,7 +11,7 @@ class Song:
         self._year = year
         self._artist_id = artist_id
 
-    def __repr__(self):
+    def __str__(self):
         artist = Artist.find_by_id(self.artist_id)
         return (
             f" - {self.name} ({artist.name}, {self.year})"

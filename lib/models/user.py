@@ -19,7 +19,7 @@ class User:
         self._email = email
         self._password = password
 
-    def __repr__(self):
+    def __str__(self):
         return (
             f"<User {self.name} (Gender: {self.gender}, Birth year: {self.birth_year}, Email address: {self.email}>)"
         )

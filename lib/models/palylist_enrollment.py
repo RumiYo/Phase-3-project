@@ -12,7 +12,7 @@ class Playlist_enrollment:
         self._playlist_id = playlist_id
         self._song_id = song_id
     
-    def __repr__(self):
+    def __str__(self):
         song = Song.find_by_id(self.song_id)
         artist = Artist.find_by_id(song.artist_id)
         playlist = Playlist.find_by_id(self.playlist_id)

@@ -10,7 +10,7 @@ class Playlist:
         self._name = name
         self._user_id = user_id
 
-    def __repr__(self):
+    def __str__(self):
         user = User.find_by_id(self.user_id)
         return(
             f"<Playlist {self.name} (user_id: {user.name}) >>"
