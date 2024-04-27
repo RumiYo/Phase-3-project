@@ -6,9 +6,9 @@ class Playlist:
     all = {}
 
     def __init__(self, name, user_id, id=None):
-        self.id = id
-        self.name = name
-        self.user_id = user_id
+        self._id = id
+        self._name = name
+        self._user_id = user_id
 
     def __repr__(self):
         user = User.find_by_id(self.user_id)

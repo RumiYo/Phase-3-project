@@ -18,10 +18,10 @@ class Artist:
     all = {}
 
     def __init__(self, name, country, genre_id, id=None):
-        self.id = id
-        self.name = name 
-        self.country = country
-        self.genre_id = genre_id
+        self._id = id
+        self._name = name 
+        self._country = country
+        self._genre_id = genre_id
 
     def __repr__(self):
         return f" - {self.name} ({GENRES.get(self.genre_id)}, {self.country}) "

@@ -12,12 +12,12 @@ class User:
     }
 
     def __init__(self, name, birth_year, gender, email, password, id=None):
-        self.id = id
-        self.name = name
-        self.birth_year = birth_year
-        self.gender = gender
-        self.email = email
-        self.password = password
+        self._id = id
+        self._name = name
+        self._birth_year = birth_year
+        self._gender = gender
+        self._email = email
+        self._password = password
 
     def __repr__(self):
         return (

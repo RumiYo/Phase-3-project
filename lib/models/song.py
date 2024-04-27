@@ -6,10 +6,10 @@ class Song:
     all = {}
 
     def __init__(self, name, year, artist_id, id=None):
-        self.id = id 
-        self.name = name
-        self.year = year
-        self.artist_id = artist_id
+        self._id = id 
+        self._name = name
+        self._year = year
+        self._artist_id = artist_id
 
     def __repr__(self):
         artist = Artist.find_by_id(self.artist_id)
