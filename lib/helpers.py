@@ -92,10 +92,10 @@ def find_artist_by_name():
     print("Find artist\n")
     name = input("Enter the artist name: ")
     artists = Artist.find_by_name_partial_match(name)
-    artists.sort(key=lambda x: x.name) 
     if not artists:
         print (f'Artist name "{name}" not found')
     else:
+        artists.sort(key=lambda x: x.name) 
         for artist in artists:
             print(f"\n{artist}")
             Song.create_table()         
@@ -136,10 +136,10 @@ def find_song_by_name():
     print("Find song\n")
     name = input("Enter the song name: ")
     songs = Song.find_by_name_partial_match(name)
-    songs.sort(key=lambda x: x.name) 
     if not songs:
         print (f'Song name "{name}" not found')
     else:
+        songs.sort(key=lambda x: x.name) 
         for song in songs:
             print(song)      
 
@@ -181,11 +181,11 @@ def list_playlists(user):
     Playlist.create_table()
     print(f"{user.name}'s Playlist list\n")    
     playlists = Playlist.get_all_by_user(user.id)
-    playlists.sort(key=lambda x: x.name) 
     if playlists:
         for playlist in playlists:
             print(f" - {playlist.name}")
     else:
+        playlists.sort(key=lambda x: x.name) 
         print("Playlist does not exist")
     
 def open_playlist_by_name(user):
@@ -193,8 +193,8 @@ def open_playlist_by_name(user):
     print("Open Playlist\n")
     name = input("Enter the playlist name: ")
     playlists = Playlist.get_all_by_user_n_name_partial_match(user.id, name)
-    playlists.sort(key=lambda x: x.name) 
     if playlists:
+        playlists.sort(key=lambda x: x.name) 
         for playlist in playlists:
             print(f"\n<Playlist: {playlist.name}>") 
             enrollments = Playlist_enrollment.get_all_songs_for_playlist(playlist.id)

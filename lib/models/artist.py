@@ -18,7 +18,7 @@ class Artist:
     all = {}
 
     def __init__(self, name, country, genre_id, id=None):
-        self._id = id
+        self.id = id
         self._name = name 
         self._country = country
         self._genre_id = genre_id

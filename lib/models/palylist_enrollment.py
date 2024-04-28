@@ -8,7 +8,7 @@ class Playlist_enrollment:
     all = {}
 
     def __init__(self, playlist_id, song_id, id=None):
-        self._id = id
+        self.id = id
         self._playlist_id = playlist_id
         self._song_id = song_id
     

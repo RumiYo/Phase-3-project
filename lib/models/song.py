@@ -6,7 +6,7 @@ class Song:
     all = {}
 
     def __init__(self, name, year, artist_id, id=None):
-        self._id = id 
+        self.id = id 
         self._name = name
         self._year = year
         self._artist_id = artist_id

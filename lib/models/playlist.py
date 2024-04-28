@@ -6,7 +6,7 @@ class Playlist:
     all = {}
 
     def __init__(self, name, user_id, id=None):
-        self._id = id
+        self.id = id
         self._name = name
         self._user_id = user_id
 

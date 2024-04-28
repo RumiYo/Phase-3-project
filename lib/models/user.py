@@ -12,7 +12,7 @@ class User:
     }
 
     def __init__(self, name, birth_year, gender, email, password, id=None):
-        self._id = id
+        self.id = id
         self._name = name
         self._birth_year = birth_year
         self._gender = gender
