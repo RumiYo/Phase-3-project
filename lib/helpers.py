@@ -69,7 +69,6 @@ def change_password():
             except Exception as exc:
                 print("Error changing password", exc)
                 return None
-
         else: 
             print("\nThe password is wrong")
             return None
@@ -99,7 +98,7 @@ def find_artist_by_name():
         for artist in artists:
             print(f"\n{artist}")
             Song.create_table()         
-            songs = Song.get_all_for_artist(artist.id)
+            songs = Artist.songs(artist)
             if songs: 
                 for song in songs:
                     print(f"    - {song.name} ({song.year})")
@@ -172,7 +171,11 @@ def remove_song():
     song_verify = Song.find_by_name_full_match(name)
     if song_verify:
         Song.delete(song_verify)
-        print(f"\n{name} is successfly added")
+        playlist_enrollments = Song.playlist_enrollments(song_verify)
+        if playlist_enrollments:
+            for playlist_enrollment in playlist_enrollments:
+                Playlist_enrollment.delete(playlist_enrollment)
+        print(f"\n{name} is successfly deleted")
     else:
         print (f'Song name "{name}" not found')
 
@@ -197,12 +200,12 @@ def open_playlist_by_name(user):
         playlists.sort(key=lambda x: x.name) 
         for playlist in playlists:
             print(f"\n<Playlist: {playlist.name}>") 
+            Playlist_enrollment.create_table()
             enrollments = Playlist_enrollment.get_all_songs_for_playlist(playlist.id)
             if enrollments: 
                 for enrollment in enrollments:
                     song_info = Song.find_by_id(enrollment.song_id)
                     print(enrollment)
-                    # print(f"  - {song_info.name} (Year: {song_info.year})")
             else: 
                 print("  No songs registered for this playlist")
     else:

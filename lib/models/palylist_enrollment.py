@@ -9,8 +9,8 @@ class Playlist_enrollment:
 
     def __init__(self, playlist_id, song_id, id=None):
         self.id = id
-        self._playlist_id = playlist_id
-        self._song_id = song_id
+        self.playlist_id = playlist_id
+        self.song_id = song_id
     
     def __str__(self):
         song = Song.find_by_id(self.song_id)

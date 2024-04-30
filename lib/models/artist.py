@@ -19,9 +19,9 @@ class Artist:
 
     def __init__(self, name, country, genre_id, id=None):
         self.id = id
-        self._name = name 
-        self._country = country
-        self._genre_id = genre_id
+        self.name = name 
+        self.country = country
+        self.genre_id = genre_id
 
     def __str__(self):
         return f" - {self.name} ({GENRES.get(self.genre_id)}, {self.country}) "
@@ -167,4 +167,13 @@ class Artist:
         search_term = '%' + name + '%'
         rows = CURSOR.execute(sql,(search_term,)).fetchall()
         return [cls.instance_from_db(row) for row in rows] if rows else None
+        
+    def songs(self):
+        from models.song import Song
+        sql = """
+            SELECT * FROM songs
+            WHERE artist_id = ?
+        """ 
+        rows = CURSOR.execute(sql, (self.id, )).fetchall()
+        return [Song.instance_from_db(row) for row in rows] if rows else None
 

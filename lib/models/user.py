@@ -13,11 +13,11 @@ class User:
 
     def __init__(self, name, birth_year, gender, email, password, id=None):
         self.id = id
-        self._name = name
-        self._birth_year = birth_year
-        self._gender = gender
-        self._email = email
-        self._password = password
+        self.name = name
+        self.birth_year = birth_year
+        self.gender = gender
+        self.email = email
+        self.password = password
 
     def __str__(self):
         return (

@@ -7,9 +7,9 @@ class Song:
 
     def __init__(self, name, year, artist_id, id=None):
         self.id = id 
-        self._name = name
-        self._year = year
-        self._artist_id = artist_id
+        self.name = name
+        self.year = year
+        self.artist_id = artist_id
 
     def __str__(self):
         artist = Artist.find_by_id(self.artist_id)
@@ -132,14 +132,14 @@ class Song:
         rows =CURSOR.execute(sql).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
-    @classmethod 
-    def get_all_for_artist(cls, artist_id):
-        sql = """
-            SELECT * FROM songs
-            WHERE artist_id = ?
-        """ 
-        rows =CURSOR.execute(sql, (artist_id, )).fetchall()
-        return [cls.instance_from_db(row) for row in rows]
+    # @classmethod 
+    # def get_all_for_artist(cls, artist_id):
+    #     sql = """
+    #         SELECT * FROM songs
+    #         WHERE artist_id = ?
+    #     """ 
+    #     rows =CURSOR.execute(sql, (artist_id, )).fetchall()
+    #     return [cls.instance_from_db(row) for row in rows]
 
     @classmethod
     def find_by_id(cls, id):
@@ -151,7 +151,7 @@ class Song:
         return cls.instance_from_db(row) if row else None
     
     @classmethod
-    def find_by_name_full_match(cls,name):
+    def find_by_name_full_match(cls, name):
         sql = """
             SELECT * FROM songs 
             WHERE LOWER(name) = LOWER(?)
@@ -169,3 +169,14 @@ class Song:
         search_term = '%' + name + '%'
         rows = CURSOR.execute(sql,(search_term,)).fetchall()
         return [cls.instance_from_db(row) for row in rows] if rows else None
+
+    def playlist_enrollments(self):
+        from models.palylist_enrollment import Playlist_enrollment
+        sql = """
+            SELECT * FROM playlist_enrollments
+            WHERE song_id = ?
+        """
+        rows = CURSOR.execute(sql, (self.id, )).fetchall()
+        return [Playlist_enrollment.instance_from_db(row) for row in rows] if rows else None
+
+
