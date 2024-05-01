@@ -1,7 +1,4 @@
 from models.__init__ import CURSOR, CONN
-from models.playlist import Playlist
-from models.song import Song
-from models.artist import Artist
 
 class Playlist_enrollment:
 
@@ -13,6 +10,9 @@ class Playlist_enrollment:
         self.song_id = song_id
     
     def __str__(self):
+        from models.playlist import Playlist
+        from models.song import Song
+        from models.artist import Artist
         song = Song.find_by_id(self.song_id)
         artist = Artist.find_by_id(song.artist_id)
         playlist = Playlist.find_by_id(self.playlist_id)
@@ -103,7 +103,7 @@ class Playlist_enrollment:
             enrollment.playlist_id = row[1]
             enrollment.song_id = row[2]
         else:
-            enrollment = cls(row[0], row[1], row[2])
+            enrollment = cls(row[1], row[2])
             enrollment.id = row[0]
             cls.all[enrollment.id] = enrollment
         return enrollment
@@ -114,15 +114,6 @@ class Playlist_enrollment:
             SELECT * FROM playlist_enrollments
         """
         rows = CURSOR.execute(sql).fetchall()
-        return [cls.instance_from_db(row) for row in rows]
-
-    @classmethod 
-    def get_all_songs_for_playlist(cls, playlist_id):
-        sql = """
-            SELECT * FROM playlist_enrollments
-            WHERE playlist_id = ?
-        """
-        rows = CURSOR.execute(sql, (playlist_id, )).fetchall()
         return [cls.instance_from_db(row) for row in rows]
 
     @classmethod

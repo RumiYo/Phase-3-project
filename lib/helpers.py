@@ -3,7 +3,7 @@ from models.artist import Artist, GENRES
 from models.song import Song
 from models.user import User
 from models.playlist import Playlist
-from models.palylist_enrollment import Playlist_enrollment
+from models.playlist_enrollment import Playlist_enrollment
 
 
 def exit_program():
@@ -183,12 +183,12 @@ def remove_song():
 def list_playlists(user):
     Playlist.create_table()
     print(f"{user.name}'s Playlist list\n")    
-    playlists = Playlist.get_all_by_user(user.id)
+    playlists = user.playlists()
     if playlists:
+        playlists.sort(key=lambda x: x.name) 
         for playlist in playlists:
             print(f" - {playlist.name}")
-    else:
-        playlists.sort(key=lambda x: x.name) 
+    else:  
         print("Playlist does not exist")
     
 def open_playlist_by_name(user):
@@ -201,10 +201,9 @@ def open_playlist_by_name(user):
         for playlist in playlists:
             print(f"\n<Playlist: {playlist.name}>") 
             Playlist_enrollment.create_table()
-            enrollments = Playlist_enrollment.get_all_songs_for_playlist(playlist.id)
-            if enrollments: 
-                for enrollment in enrollments:
-                    song_info = Song.find_by_id(enrollment.song_id)
+            song_enrollments = playlist.playlist_enrollments()
+            if song_enrollments:
+                for enrollment in song_enrollments:
                     print(enrollment)
             else: 
                 print("  No songs registered for this playlist")

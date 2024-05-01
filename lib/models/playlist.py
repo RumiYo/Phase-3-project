@@ -163,4 +163,11 @@ class Playlist:
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
-    
+    def playlist_enrollments(self):
+        from models.playlist_enrollment import Playlist_enrollment
+        sql = """
+            SELECT * FROM playlist_enrollments
+            WHERE playlist_id = ?
+        """
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Playlist_enrollment.instance_from_db(row) for row in rows] if rows else None

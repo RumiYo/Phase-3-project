@@ -194,3 +194,12 @@ class User:
         """
         row = CURSOR.execute(sql, (email, )).fetchone()
         return cls.instance_from_db(row) if row else None
+
+    def playlists(self):
+        from models.playlist import Playlist
+        sql = """
+            SELECT * FROM playlists
+            WHERE user_id = ?
+        """
+        rows = CURSOR.execute(sql, (self.id, )).fetchall()
+        return [Playlist.instance_from_db(row) for row in rows] if rows else None
