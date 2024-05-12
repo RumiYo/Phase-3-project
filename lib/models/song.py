@@ -37,7 +37,7 @@ class Song:
         if isinstance(year, int) and 1800 <= year <= 2024:
             self._year = year
         else: 
-            raise TypeError ("Release year must be between 1800 and 2024")
+            raise TypeError ("Release year must be a number between 1800 and 2024")
     
     @property
     def artist_id (self):
@@ -48,7 +48,7 @@ class Song:
         if type(artist_id) is int and Artist.find_by_id(artist_id):
             self._artist_id = artist_id
         else:
-            raise ValueError("Artist_id must reference a artist in the database")
+            raise ValueError("Artist does not exist.  Add the artist first before adding their song.")
 
     @classmethod
     def create_table(cls):

@@ -12,7 +12,7 @@ def exit_program():
 
 def login():
     User.create_table()
-    print("\n----------------------------------")
+    print("----------------------------------")
     print("Good to see you again!\n")
     name = input("  Enter your name: ")
     password = input("  Enter your password: ")
@@ -30,7 +30,8 @@ def login():
 
 def signup():
     User.create_table()
-    print("\nCrate your account.\n")
+    print("----------------------------------")
+    print("\nCrate your account\n")
     name = input("Enter your name: ")
     name_verify = User.find_by_name(name)
     if name_verify:
@@ -52,10 +53,13 @@ def signup():
                 print(f"{user.name} account is successfully created.")
                 return user
             except Exception as exc:
-                print("Error creating a user account", exc)
+                print("Error creating a user account: ", exc)
                 return None
 
 def change_password():
+    User.create_table()
+    print("----------------------------------")
+    print("\nChange your password\n")
     name = input("  Enter your name: ")
     user = User.find_by_name(name)
     if user:
@@ -65,21 +69,22 @@ def change_password():
             user.password = new_password
             try: 
                 user_updated = User.update(user)
-                print(f"{user_updated.name}'s password is updated")
+                print(f"\n{user_updated.name}'s password is updated successfuly")
             except Exception as exc:
-                print("Error changing password", exc)
+                print("\nError changing password: ", exc)
                 return None
         else: 
-            print("\nThe password is wrong")
+            print("\nThe password is wrong. Please try it again.")
             return None
     else: 
-        print("\nThe user name does not exist")
+        print("\nThe user name does not exist. Please try it again.")
         return None    
 
     
 
 def list_artists():
     Artist.create_table()
+    print("---------------------------------------")
     print("Artist list\n")
     artists = Artist.get_all()
     artists.sort(key=lambda x: x.name) 
@@ -88,43 +93,46 @@ def list_artists():
 
 def find_artist_by_name():
     Artist.create_table()
+    print("---------------------------------------")
     print("Find artist\n")
-    name = input("Enter the artist name: ")
+    name = input("  Enter the artist name: ")
     artists = Artist.find_by_name_partial_match(name)
     if not artists:
-        print (f'Artist name "{name}" not found')
+        print (f'\nArtist name "{name}" not found')
     else:
         artists.sort(key=lambda x: x.name) 
         for artist in artists:
-            print(f"\n{artist}")
+            print(f"\n {artist}")
             Song.create_table()         
             songs = Artist.songs(artist)
             if songs: 
                 for song in songs:
-                    print(f"    - {song.name} ({song.year})")
+                    print(f"     - {song.name} ({song.year})")
             else: 
                 print("  No songs registered for this artist")
 
 
 def add_artist():
+    print("---------------------------------------")
     print("Add artist\n")
     Artist.create_table()
-    name = input("Enter artist name: ")
+    name = input("  Enter artist name: ")
     name_verify = Artist.find_by_name_full_match(name)
     if name_verify:
         print(f"\nError adding the artist: {name} already exists.")
     else:
-        country = input("Enter what country the artist is from: ")
-        print(f"Genre list: {GENRES}")
-        genre_id =input ("Enter genre number from the list above: ")
+        country = input("  Enter what country the artist is from: ")
+        print(f"  Genre list: {GENRES}")
+        genre_id =input ("  Enter genre number from the list above: ")
         try:
             artist = Artist.create(name, country, int(genre_id))
-            print(f"{artist.name} is successfly added to the artist list")
+            print(f"\n{artist.name} is successfly added to the artist list")
             print(artist)
         except Exception as exc:
-            print("\nError creating an artist", exc)
+            print("\nError creating an artist: ", exc)
 
 def list_songs():
+    print("---------------------------------------")
     print("Song list\n")
     songs = Song.get_all()
     songs.sort(key=lambda x: x.name) 
@@ -132,8 +140,10 @@ def list_songs():
         print(song)
 
 def find_song_by_name():
+    print("---------------------------------------")
     print("Find song\n")
-    name = input("Enter the song name: ")
+    name = input("  Enter the song name: ")
+    print("\n")
     songs = Song.find_by_name_partial_match(name)
     if not songs:
         print (f'Song name "{name}" not found')
@@ -144,12 +154,13 @@ def find_song_by_name():
 
 
 def add_song():
+    print("---------------------------------------")
     print("Add song\n")
     Song.create_table()
-    name = input("Enter song name: ")
+    name = input("  Enter song name: ")
     name_verify = Song.find_by_name_full_match(name)
-    year = input("Enter the release year: ")
-    artist_name = input("Enter the artist name: ")
+    year = input("  Enter the release year: ")
+    artist_name = input("  Enter the artist name: ")
     artist_verify = Artist.find_by_name_full_match(artist_name)
     if artist_verify:
         if name_verify:
@@ -162,9 +173,10 @@ def add_song():
             except Exception as exc:
                 print("Error adding a song", exc)
     else:
-        print(f'Artist name "{artist_name}" not found')
+        print(f'Artist name "{artist_name}" not found. Please make sure to enter the full name of the artist')
 
 def remove_song():
+    print("---------------------------------------")
     print("Remove song\n")
     Song.create_table()
     name = input("Enter song name: ")
@@ -181,6 +193,7 @@ def remove_song():
 
 
 def list_playlists(user):
+    print("---------------------------------------")
     Playlist.create_table()
     print(f"{user.name}'s Playlist list\n")    
     playlists = user.playlists()
@@ -193,13 +206,14 @@ def list_playlists(user):
     
 def open_playlist_by_name(user):
     Playlist.create_table()
+    print("---------------------------------------")
     print("Open Playlist\n")
-    name = input("Enter the playlist name: ")
+    name = input("  Enter the playlist name: ")
     playlists = Playlist.get_all_by_user_n_name_partial_match(user.id, name)
     if playlists:
         playlists.sort(key=lambda x: x.name) 
         for playlist in playlists:
-            print(f"\n<Playlist: {playlist.name}>") 
+            print(f'\n  - {playlist.name}') 
             Playlist_enrollment.create_table()
             song_enrollments = playlist.playlist_enrollments()
             if song_enrollments:
@@ -208,9 +222,10 @@ def open_playlist_by_name(user):
             else: 
                 print("  No songs registered for this playlist")
     else:
-        print (f'Playlist {name} not found')
+        print (f'Playlist "{name}" not found')
 
 def create_playlist(user):
+    print("---------------------------------------")
     print("Create Playlist\n")
     Playlist.create_table()
     name = input("Enter playlist name: ")
@@ -226,47 +241,49 @@ def create_playlist(user):
             print("Error creating a playlist", exc)
 
 def add_song_to_playlist(user):
+    print("---------------------------------------")
     print("Add song to playlist\n")
     Playlist_enrollment.create_table()
-    playlist_name = input("Enter the playlist name: ")
+    playlist_name = input("  Enter the playlist name: ")
     playlist = Playlist.get_all_by_user_n_name(int(user.id), playlist_name)
     if playlist:
-        song_name = input(f"Enter the song name to add to {playlist_name}:")
+        song_name = input(f"  Enter the song name to add to {playlist_name}: ")
         song = Song.find_by_name_full_match(song_name)
         if song:
             if Playlist_enrollment.find_registry(playlist.id, song.id):
-                print(f'{song_name} is already in playlist {playlist.name}')
+                print(f'\n"{song_name}" is already in playlist "{playlist.name}"')
             else:
                 try:
                     enrollment = Playlist_enrollment.create(int(playlist.id), int(song.id))
-                    print(f"{song.name} is successfly added to playlist {playlist.name}")
+                    print(f'\n"{song.name}" is successfly added to playlist "{playlist.name}"')
                 except Exception as exc:
-                    print("Error creating an artist", exc)            
+                    print("Error creating an artist: ", exc)            
         else: 
-            print(f'"{song_name}" not found')
+            print(f'\n"{song_name}" not found')
     else: 
-        print(f"{playlist_name} not found")
+        print(f'\nPlaylist "{playlist_name}" not found')
 
 
 def Remove_song_from_playlist(user):
+    print("---------------------------------------")
     print("Remove song from playlist\n")
     Playlist_enrollment.create_table()
-    playlist_name = input("Enter the playlist name: ")
+    playlist_name = input("  Enter the playlist name: ")
     playlist = Playlist.get_all_by_user_n_name(int(user.id), playlist_name)
     if playlist:
-        song_name = input(f"Enter the song name to remove from {playlist_name}:")
+        song_name = input(f"  Enter the song name to remove from {playlist_name}:")
         song = Song.find_by_name_full_match(song_name)
         emrollment_verify = Playlist_enrollment.find_registry(playlist.id, song.id)
         if emrollment_verify: 
             try:
                 Playlist_enrollment.delete(emrollment_verify)
-                print(f"{song.name} is successfly deleted to playlist {playlist.name}")
+                print(f'\n"{song.name}" is successfly deleted from playlist "{playlist.name}"')
             except Exception as exc:
-                print("Error creating an artist", exc)            
+                print("\nError removing the song from the playlist: ", exc)            
         else: 
-            print(f'"{song_name}" not found')
+            print(f'\n"{song_name}" not found')
     else: 
-        print(f"{playlist_name} not found")
+        print(f'\n"{playlist_name}" not found')
 
 
 

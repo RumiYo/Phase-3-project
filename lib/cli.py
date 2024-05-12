@@ -129,7 +129,7 @@ def login_page():
     print("\n")
 
 def main_page():
-    print("\n----------------------------------")
+    print("\n=======================================")
     print("What do you want to listen to?\n")
     print("  1. Artists")
     print("  2. Songs")
@@ -139,7 +139,7 @@ def main_page():
     print("\n")
 
 def menu_artists():
-    print("\n----------------------------------")
+    print("\n=======================================")
     print("Artists\n")
     print("  1. Open the list of artists")
     print("  2. Find artists by name")
@@ -150,7 +150,7 @@ def menu_artists():
     return True
 
 def menu_songs():
-    print("\n----------------------------------")
+    print("\n=======================================")
     print("Songs\n")
     print("  1. Open the whole list of songs")
     print("  2. Find song by name")
@@ -162,7 +162,7 @@ def menu_songs():
     return True
 
 def menu_playlists():
-    print("\n----------------------------------")
+    print("\n=======================================")
     print("Playlist\n")
     print("  1. Open the list of playlist")
     print("  2. Open playlist by name")

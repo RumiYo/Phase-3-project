@@ -16,7 +16,7 @@ class Playlist_enrollment:
         song = Song.find_by_id(self.song_id)
         artist = Artist.find_by_id(song.artist_id)
         playlist = Playlist.find_by_id(self.playlist_id)
-        return (f" - {song.name} ({artist.name}, {song.year})")
+        return (f"     - {song.name} ({artist.name}, {song.year})")
 
     @property
     def playlist_id(self):

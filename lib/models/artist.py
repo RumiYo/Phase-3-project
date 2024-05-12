@@ -43,10 +43,10 @@ class Artist:
 
     @country.setter
     def country(self, country):
-        if isinstance(country, str) and len(country):
+        if isinstance(country, str) and len(country) > 3:
             self._country = country
         else:
-            raise ValueError("Country is a string")
+            raise ValueError("Country must be a string longer than 3 characters")
     
     @property
     def genre_id(self):
@@ -57,7 +57,7 @@ class Artist:
         if isinstance(genre_id, int) and 1 <= genre_id <= 10:
             self._genre_id = genre_id
         else:
-            raise ValueError("Genre is a number")
+            raise ValueError("Genre must be a number between 1 and 10")
 
     @classmethod
     def create_table(cls):

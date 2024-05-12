@@ -34,7 +34,7 @@ class User:
         if isinstance(name, str) and len(name):
             self._name = name
         else:
-            raise TypeError ("Name mst be a non-empty string.")
+            raise TypeError ("Name must be a non-empty string.")
 
     @property
     def birth_year(self):
@@ -45,7 +45,7 @@ class User:
         if isinstance(birth_year, int) and 1930<= birth_year <= 2024:
             self._birth_year = birth_year
         else:
-            raise TypeError ("Birth year must be a number and between 1930 and 2024")
+            raise TypeError ("Birth year must be a number between 1930 and 2024")
 
     @property
     def gender(self):
@@ -56,7 +56,7 @@ class User:
         if isinstance(gender, int) and 1 <= gender <= 4 :
             self._gender = gender
         else:
-            raise TypeError ("Select your gender from the options")
+            raise TypeError ("You must select your gender from the options(1~4)")
 
     @property 
     def email(self):
@@ -67,7 +67,7 @@ class User:
         if isinstance(email, str) and "@" in email:
             self._email = email
         else:
-            raise TypeError("Please type email address")
+            raise TypeError("Please type correct email address")
 
     @property 
     def password(self):
