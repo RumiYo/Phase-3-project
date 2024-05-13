@@ -79,7 +79,6 @@ def change_password():
     else: 
         print("\nThe user name does not exist. Please try it again.")
         return None    
-
     
 
 def list_artists():
@@ -89,7 +88,7 @@ def list_artists():
     artists = Artist.get_all()
     artists.sort(key=lambda x: x.name) 
     for artist in artists:
-        print(artist)
+        print(f" - {artist.name} ({GENRES.get(artist.genre_id)}, {artist.country}) ")
 
 def find_artist_by_name():
     Artist.create_table()
@@ -102,7 +101,7 @@ def find_artist_by_name():
     else:
         artists.sort(key=lambda x: x.name) 
         for artist in artists:
-            print(f"\n {artist}")
+            print(f"\n {artist.name}")
             Song.create_table()         
             songs = Artist.songs(artist)
             if songs: 
@@ -127,7 +126,6 @@ def add_artist():
         try:
             artist = Artist.create(name, country, int(genre_id))
             print(f"\n{artist.name} is successfly added to the artist list")
-            print(artist)
         except Exception as exc:
             print("\nError creating an artist: ", exc)
 
@@ -137,7 +135,8 @@ def list_songs():
     songs = Song.get_all()
     songs.sort(key=lambda x: x.name) 
     for song in songs:
-        print(song)
+        artist = Artist.find_by_id(song.artist_id)
+        print(f" - {song.name} ({artist.name}, {song.year})")
 
 def find_song_by_name():
     print("---------------------------------------")
@@ -150,7 +149,8 @@ def find_song_by_name():
     else:
         songs.sort(key=lambda x: x.name) 
         for song in songs:
-            print(song)      
+            artist = Artist.find_by_id(song.artist_id)
+            print(f" - {song.name} ({artist.name}, {song.year})")      
 
 
 def add_song():
@@ -169,7 +169,6 @@ def add_song():
             try:
                 song = Song.create(name, int(year), int(artist_verify.id))
                 print(f"\n{song.name} is successfly added")
-                print(song)
             except Exception as exc:
                 print("Error adding a song", exc)
     else:
@@ -218,7 +217,10 @@ def open_playlist_by_name(user):
             song_enrollments = playlist.playlist_enrollments()
             if song_enrollments:
                 for enrollment in song_enrollments:
-                    print(enrollment)
+                    song = Song.find_by_id(enrollment.song_id)
+                    artist = Artist.find_by_id(song.artist_id)
+                    playlist = Playlist.find_by_id(enrollment.playlist_id)
+                    print(f"     - {song.name} ({artist.name}, {song.year})")
             else: 
                 print("  No songs registered for this playlist")
     else:

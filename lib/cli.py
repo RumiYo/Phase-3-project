@@ -58,7 +58,6 @@ def main():
                                         break
                                     elif choice == "0":  # 0. Exit the program
                                         exit_program()
-                                        break
                                     else: 
                                         print("Invalid choice")
 
@@ -78,7 +77,6 @@ def main():
                                         break
                                     elif choice == "0":  # 0. Exit the program
                                         exit_program()
-                                        break
                                     else: 
                                         print("Invalid choice") 
 
@@ -100,7 +98,6 @@ def main():
                                         break
                                     elif choice == "0":  # 0. Exit the program
                                         exit_program()
-                                        break
                                     else: 
                                         print("Invalid choice") 
 
