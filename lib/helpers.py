@@ -230,7 +230,7 @@ def create_playlist(user):
     print("---------------------------------------")
     print("Create Playlist\n")
     Playlist.create_table()
-    name = input("Enter playlist name: ")
+    name = input("  Enter playlist name: ")
     name_verify = Playlist.get_all_by_user_n_name(user.id, name)
     if name_verify:
         print(f"Error creating playlist: Playlist {name} already exists")
@@ -240,7 +240,7 @@ def create_playlist(user):
             print(f'Playlist "{playlist.name}" is successfly created')
             print(playlist)
         except Exception as exc:
-            print("Error creating a playlist", exc)
+            print("Error creating a playlist: ", exc)
 
 def add_song_to_playlist(user):
     print("---------------------------------------")
