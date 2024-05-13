@@ -235,7 +235,7 @@ def create_playlist(user):
     else:
         try:
             playlist = Playlist.create(name, int(user.id))
-            print(f"Playlist {playlist.name} is successfly created")
+            print(f'Playlist "{playlist.name}" is successfly created')
             print(playlist)
         except Exception as exc:
             print("Error creating a playlist", exc)
@@ -264,7 +264,7 @@ def add_song_to_playlist(user):
         print(f'\nPlaylist "{playlist_name}" not found')
 
 
-def Remove_song_from_playlist(user):
+def remove_song_from_playlist(user):
     print("---------------------------------------")
     print("Remove song from playlist\n")
     Playlist_enrollment.create_table()

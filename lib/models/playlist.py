@@ -11,9 +11,8 @@ class Playlist:
         self.user_id = user_id
 
     def __str__(self):
-        user = User.find_by_id(self.user_id)
         return(
-            f"<Playlist {self.name} (user_id: {user.name}) >>"
+            f" - Playlist: {self.name}"
         )
 
     @property

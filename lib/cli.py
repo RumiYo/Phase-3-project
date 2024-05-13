@@ -16,7 +16,7 @@ from helpers import (
     open_playlist_by_name,
     create_playlist,
     add_song_to_playlist,
-    Remove_song_from_playlist
+    remove_song_from_playlist
 
 )
 
@@ -95,7 +95,7 @@ def main():
                                     elif choice == "4":  # 4. Add song to a playlist
                                         add_song_to_playlist(logged_in_user)
                                     elif choice == "5":  # 5. Add song to a playlist
-                                        Remove_song_from_playlist(logged_in_user)
+                                        remove_song_from_playlist(logged_in_user)
                                     elif choice == "6":  # 6. Return to Main page
                                         break
                                     elif choice == "0":  # 0. Exit the program
