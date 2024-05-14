@@ -95,20 +95,27 @@ def find_artist_by_name():
     print("---------------------------------------")
     print("Find artist\n")
     name = input("  Enter the artist name: ")
-    artists = Artist.find_by_name_partial_match(name)
-    if not artists:
+
+    # PARTIAL MATCH SEARCH
+    # artists = Artist.find_by_name_partial_match(name)
+    # if not artist:
+    #     print (f'\nArtist name "{name}" not found')
+    # else:
+    #     artists.sort(key=lambda x: x.name) 
+    #     for artist in artists:
+    #         print(f"\n {artist.name}")
+    #         Song.create_table()         
+    #         songs = Artist.songs(artist)
+    #         if songs: 
+    #             for song in songs:
+    #                 print(f"     - {song.name} ({song.year})")
+    #         else: 
+    #             print("  No songs registered for this artist")
+
+    artist = Artist.find_by_name_full_match(name)
+    if not artist:
         print (f'\nArtist name "{name}" not found')
-    else:
-        artists.sort(key=lambda x: x.name) 
-        for artist in artists:
-            print(f"\n {artist.name}")
-            Song.create_table()         
-            songs = Artist.songs(artist)
-            if songs: 
-                for song in songs:
-                    print(f"     - {song.name} ({song.year})")
-            else: 
-                print("  No songs registered for this artist")
+    return artist
 
 
 def add_artist():
@@ -128,6 +135,18 @@ def add_artist():
             print(f"\n{artist.name} is successfly added to the artist list")
         except Exception as exc:
             print("\nError creating an artist: ", exc)
+
+def list_songs_of_artist(artist):
+    Song.create_table()         
+    songs = Artist.songs(artist)
+    if songs: 
+        print("---------------------------------------")
+        print(f"{artist.name}'s songs\n")
+        for song in songs:
+            print(f"     - {song.name} ({song.year})")
+    else: 
+        print("  No songs registered for this artist")
+
 
 def list_songs():
     print("---------------------------------------")
