@@ -87,8 +87,9 @@ def list_artists():
     print("Artist list\n")
     artists = Artist.get_all()
     artists.sort(key=lambda x: x.name) 
-    for artist in artists:
-        print(f" - {artist.name} ({GENRES.get(artist.genre_id)}, {artist.country}) ")
+    for i, artist in enumerate(artists):
+        print(f"  {i + 1}.  {artist.name} ({GENRES.get(artist.genre_id)}, {artist.country}) ")
+    return artists
 
 def find_artist_by_name():
     Artist.create_table()
@@ -117,6 +118,14 @@ def find_artist_by_name():
         print (f'\nArtist name "{name}" not found')
     return artist
 
+def find_artist_by_number():
+    artists = list_artists()
+    number = input("\n  Enter a number of the artist from above: ")
+    if 0 < int(number) <= len(artists):
+        artist = artists[int(number)-1]
+    else:
+        print("The input is not a number from the artist list")
+    return artist
 
 def add_artist():
     print("---------------------------------------")
@@ -160,7 +169,7 @@ def add_song_for_selected_artist(artist):
     else:
         try:
             song = Song.create(name, int(year), artist.id)
-            print(f"\n{song.name} is successfly added")
+            print(f'\n"{song.name}" is successfly added')
         except Exception as exc:
             print("Error adding a song", exc)
    

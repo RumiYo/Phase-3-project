@@ -7,6 +7,7 @@ from helpers import (
     change_password,
     list_artists,
     find_artist_by_name,
+    find_artist_by_number,
     add_artist,
     list_songs_of_artist,
     add_song_for_selected_artist,
@@ -57,43 +58,48 @@ def main():
             print("Invalid choice")
 
 def artist_loop():
-    selected_artist = None
+    selected_artist = None  
 
-    while not selected_artist:  
-        menu_artists()
-        choice = input("> ")
-        if choice == "1":   # 1. Open the list of artist
-            list_artists()
-        elif choice == "2":  # 2. Find artist by name
-            artist = find_artist_by_name()
-            if artist: 
-                selected_artist = artist
-                
-        elif choice == "3":  # 3. Add artist"
-            add_artist()
-        elif choice == "4":  # 4. Return to Main page
-            break
-        elif choice == "0":  # 0. Exit the program
-            exit_program()
-        else: 
-            print("Invalid choice")
-    
-    while selected_artist: 
-        chosen_artist_menu(artist) 
-        choice = input("> ")
+    while True:
+        while not selected_artist:  
+            menu_artists()
+            choice = input("> ")
+            if choice == "1":   # 1. Open the list of artist
+                list_artists()
+            elif choice == "2":  # 2. Find artist by name
+                artist = find_artist_by_name()
+                if artist: 
+                    selected_artist = artist
+            elif choice == "3":  # 3. Select artists by number   
+                artist = find_artist_by_number() 
+                if artist: 
+                    selected_artist = artist               
+            elif choice == "4":  # 4. Add artist
+                add_artist()
+            elif choice == "5":  # 5. Return to Main page
+                selected_artist = None
+                return
+            elif choice == "0":  # 0. Exit the program
+                exit_program()
+            else: 
+                print("Invalid choice")
+        
+        while selected_artist: 
+            chosen_artist_menu(artist) 
+            choice = input("> ")
 
-        if choice == "0":
-            exit_program()
-        elif choice == "1": 
-            list_songs_of_artist(selected_artist)
-        elif choice == "2": 
-            add_song_for_selected_artist(selected_artist)
-        elif choice == "3": 
-            remove_song_for_selected_artist(selected_artist)
-        elif choice == "4": 
-            break
-        else: 
-            print("Invalid choice")
+            if choice == "0":
+                exit_program()
+            elif choice == "1": 
+                list_songs_of_artist(selected_artist)
+            elif choice == "2": 
+                add_song_for_selected_artist(selected_artist)
+            elif choice == "3": 
+                remove_song_for_selected_artist(selected_artist)
+            elif choice == "4": 
+                selected_artist = None
+            else: 
+                print("Invalid choice")
 
 def chosen_artist_menu(artist):
     print("\n=======================================")
@@ -170,9 +176,10 @@ def menu_artists():
     print("\n=======================================")
     print("Artists\n")
     print("  1. Open the list of artists")
-    print("  2. Find artists by name")
-    print("  3. Add artist")
-    print("  4. Return to Main page")
+    print("  2. Select artists by name")
+    print("  3. Select artists by number") 
+    print("  4. Add artist")
+    print("  5. Return to Main page")
     print("  0. Exit the program")
     print("\n")
     return True
