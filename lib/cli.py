@@ -9,6 +9,8 @@ from helpers import (
     find_artist_by_name,
     add_artist,
     list_songs_of_artist,
+    add_song_for_selected_artist,
+    remove_song_for_selected_artist,
     list_songs,
     find_song_by_name,
     add_song,
@@ -20,12 +22,13 @@ from helpers import (
     remove_song_from_playlist
 )
 
-logged_in_user = None
 
 def main():
-    logged_in = False
+
+    global logged_in_user 
+    logged_in_user = None
     
-    while not logged_in:  # Add a loop to continue until a valid login is performed
+    while not logged_in_user:  # Add a loop to continue until a valid login is performed
         login_page()
         choice = input("> ")
         if choice == "0":   # 0. Exit the program
@@ -33,76 +36,30 @@ def main():
         elif choice in ("1", "2"):   # 1. Login
             user = login()  if choice == "1" else signup()
             if user:
-                logged_in = True
                 logged_in_user = user  # Store the logged-in user globally
-
         elif choice == "3": 
             change_password()
-
         else:
             print("Invalid choice")
             
-    while logged_in: 
+    while logged_in_user: 
         main_page()
         choice = input("> ")
-
         if choice == "0":
             exit_program()
         elif choice == "1":  #1. Artists  
             artist_loop()
         elif choice == "2": # 2. Songs
-            while True: 
-                if menu_songs():
-                    choice = input("> ")
-                    if choice == "1":   # 1. Open the list of songs
-                        list_songs()
-                    elif choice == "2":  # 2. Find song by name
-                        find_song_by_name()
-                    elif choice == "3":  # 3. Add a song"
-                        add_song()
-                    elif choice == "4":  # 4. Remove a song"
-                        remove_song()
-                    elif choice == "5":  # 5. Return to Main page
-                        break
-                    elif choice == "0":  # 0. Exit the program
-                        exit_program()
-                    else: 
-                        print("Invalid choice") 
-
-        elif choice == "3":  # 3. Playlists        
-            while True: 
-                if menu_playlists():
-                    choice = input("> ")
-                    if choice == "1":   # 1. Open the list of playlists (logged-in users' playlists only)
-                        list_playlists(logged_in_user)
-                    elif choice == "2":  # 2. Open a playlist
-                        open_playlist_by_name(logged_in_user)
-                    elif choice == "3":  # 3. Create playlist
-                        create_playlist(logged_in_user)
-                    elif choice == "4":  # 4. Add song to a playlist
-                        add_song_to_playlist(logged_in_user)
-                    elif choice == "5":  # 5. Add song to a playlist
-                        remove_song_from_playlist(logged_in_user)
-                    elif choice == "6":  # 6. Return to Main page
-                        break
-                    elif choice == "0":  # 0. Exit the program
-                        exit_program()
-                    else: 
-                        print("Invalid choice") 
-
-        elif choice == "00":  # 00. Sign Out
-            logged_in = False
-            break 
-
+            song_loop()
+        elif choice == "3":  # 3. Playlists 
+            playlist_loop()   
         else:
             print("Invalid choice")
 
-
 def artist_loop():
-    artist_selected = False
     selected_artist = None
 
-    while not artist_selected:  
+    while not selected_artist:  
         menu_artists()
         choice = input("> ")
         if choice == "1":   # 1. Open the list of artist
@@ -110,7 +67,6 @@ def artist_loop():
         elif choice == "2":  # 2. Find artist by name
             artist = find_artist_by_name()
             if artist: 
-                artist_selected = True
                 selected_artist = artist
                 
         elif choice == "3":  # 3. Add artist"
@@ -122,7 +78,7 @@ def artist_loop():
         else: 
             print("Invalid choice")
     
-    while artist_selected: 
+    while selected_artist: 
         chosen_artist_menu(artist) 
         choice = input("> ")
 
@@ -131,11 +87,11 @@ def artist_loop():
         elif choice == "1": 
             list_songs_of_artist(selected_artist)
         elif choice == "2": 
-            pass
+            add_song_for_selected_artist(selected_artist)
         elif choice == "3": 
-            pass
+            remove_song_for_selected_artist(selected_artist)
         elif choice == "4": 
-            pass
+            break
         else: 
             print("Invalid choice")
 
@@ -148,6 +104,47 @@ def chosen_artist_menu(artist):
     print("  4. Return to Artist page")
     print("  0. Exit the program")
     print("\n")
+
+def song_loop():
+    while True: 
+        if menu_songs():
+            choice = input("> ")
+            if choice == "1":   # 1. Open the list of songs
+                list_songs()
+            elif choice == "2":  # 2. Find song by name
+                find_song_by_name()
+            elif choice == "3":  # 3. Add a song"
+                add_song()
+            elif choice == "4":  # 4. Remove a song"
+                remove_song()
+            elif choice == "5":  # 5. Return to Main page
+                break
+            elif choice == "0":  # 0. Exit the program
+                exit_program()
+            else: 
+                print("Invalid choice") 
+
+def playlist_loop():
+    while True: 
+        if menu_playlists():
+            choice = input("> ")
+            if choice == "1":   # 1. Open the list of playlists (logged-in users' playlists only)
+                list_playlists(logged_in_user)
+            elif choice == "2":  # 2. Open a playlist
+                open_playlist_by_name(logged_in_user)
+            elif choice == "3":  # 3. Create playlist
+                create_playlist(logged_in_user)
+            elif choice == "4":  # 4. Add song to a playlist
+                add_song_to_playlist(logged_in_user)
+            elif choice == "5":  # 5. Add song to a playlist
+                remove_song_from_playlist(logged_in_user)
+            elif choice == "6":  # 6. Return to Main page
+                break
+            elif choice == "0":  # 0. Exit the program
+                exit_program()
+            else: 
+                print("Invalid choice") 
+
 
 def login_page():
     print("\n****************************")
@@ -166,7 +163,6 @@ def main_page():
     print("  1. Artists")
     print("  2. Songs")
     print("  3. Playlists")
-    print("  00. Sign Out")
     print("  0. Exit the program")
     print("\n")
 

@@ -171,7 +171,7 @@ class Song:
         return [cls.instance_from_db(row) for row in rows] if rows else None
 
     def playlist_enrollments(self):
-        from models.palylist_enrollment import Playlist_enrollment
+        from models.playlist_enrollment import Playlist_enrollment
         sql = """
             SELECT * FROM playlist_enrollments
             WHERE song_id = ?
